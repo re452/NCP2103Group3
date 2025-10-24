@@ -1,5 +1,5 @@
 # PawGress
-Final Project for NCP 2103
+*Where Fitness meets Friendship.*
 
 ### System Overview
   PawGress is an interactive exercise and wellness tracking system that helps users manage their
@@ -31,3 +31,35 @@ integrating a nurturing virtual pet that thrives on user consistency, PawGress p
 motivational tool that lessens the difficulty of tracking progress. This gamified approach not only
 improves task prioritization but also fosters a sustainable commitment to a healthier lifestyle by making
 fitness management both effective and enjoyable.
+
+## Application of OOP Concepts
+
+**ENCAPSULATION - Data Protection & Controlled Access**
+- Making sensitive fields private (User.Password, User.Email, Pet.Experience)
+- Providing public methods with validation for controlled access
+- Hiding complex internal logic in private methods
+- 
+**INHERITANCE - Code Reuse & Hierarchy**
+Creating Challenge as base class with common properties
+Having PremadeChallenge and CustomChallenge inherit shared functionality
+Using BaseEntity for common ID and timestamp properties
+
+**POLYMORPHISM - Flexible Behaviors**
+- Using abstract methods that children implement differently
+- Creating interfaces for common behaviors across different classes
+- Treating different objects uniformly through base class references
+
+**ABSTRACTION - Hiding Complexity**
+- Defining abstract classes with method contracts
+- Hiding complex implementation details from users
+- Providing simple interfaces for complex operations
+
+**COHESION - Focused Responsibilities**
+- Giving each class a single, clear responsibility
+- Keeping methods focused on one specific task
+- Separating concerns into different classes
+
+**COUPLING - Minimal Dependencies**
+- Depending on abstractions (interfaces) not concrete classes
+- Using dependency injection in Blazor components
+- Keeping classes independent and focused
