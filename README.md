@@ -38,7 +38,7 @@ fitness management both effective and enjoyable.
 - Making sensitive fields private (User.Password, User.Email, Pet.Experience)
 - Providing public methods with validation for controlled access
 - Hiding complex internal logic in private methods
-- 
+
 **INHERITANCE - Code Reuse & Hierarchy**
 Creating Challenge as base class with common properties
 Having PremadeChallenge and CustomChallenge inherit shared functionality
