@@ -15,3 +15,19 @@ consistency and organizational habits. While highly beneficial for students mana
 and professionals balancing work-life fitness, the application is equally valuable for casual users, fitness
 enthusiasts, and individuals pursuing personal health goals. Its intuitive design ensures accessibility for
 users of all technical backgrounds, making structured exercise management achievable for everyone.
+
+### Main Features
+- Create and customize personal exercise routines and wellness tasks.
+- Log workout progress with details like duration, intensity, and completion status.
+- Visualize consistency and achievements through an interactive progress dashboard.
+- Nurture a unique virtual pet that levels up and evolves with maintained workout streaks.
+- Receive a daily, motivational quote tailored to foster perseverance.
+
+### Purpose & Benefits
+  PawGress transforms the often solitary challenge of maintaining an exercise regimen into an
+engaging and rewarding experience. The system is designed to enhance user organization, boost
+efficiency in workout planning, and significantly increase productivity in achieving fitness goals. By
+integrating a nurturing virtual pet that thrives on user consistency, PawGress provides a powerful
+motivational tool that lessens the difficulty of tracking progress. This gamified approach not only
+improves task prioritization but also fosters a sustainable commitment to a healthier lifestyle by making
+fitness management both effective and enjoyable.
