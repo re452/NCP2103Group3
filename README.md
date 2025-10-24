@@ -40,9 +40,9 @@ fitness management both effective and enjoyable.
 - Hiding complex internal logic in private methods
 
 **INHERITANCE - Code Reuse & Hierarchy**
-Creating Challenge as base class with common properties
-Having PremadeChallenge and CustomChallenge inherit shared functionality
-Using BaseEntity for common ID and timestamp properties
+- Creating Challenge as base class with common properties
+- Having PremadeChallenge and CustomChallenge inherit shared functionality
+- Using BaseEntity for common ID and timestamp properties
 
 **POLYMORPHISM - Flexible Behaviors**
 - Using abstract methods that children implement differently
