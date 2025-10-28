@@ -1,0 +1,112 @@
+body {
+  background: linear-gradient(to right, #5b67ec, #8d47e9);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background-color: #1b004b;
+  color: white;
+  width: 400px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  padding: 30px 20px;
+}
+
+.dialogue-box {
+  background: #2d0b67;
+  border-radius: 15px;
+  padding: 10px 15px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.paw {
+  color: #ffc93c;
+  font-weight: bold;
+}
+
+.pet-card h2 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.pet-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.pet-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
+  z-index: 1;
+  position: relative;
+}
+
+.wink-eye {
+  position: absolute;
+  top: 35px;
+  left: 32px;
+  width: 35px;
+  height: 15px;
+  background-color: #1b004b;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+@keyframes wink {
+  0% { opacity: 0; transform: scaleY(0); }
+  10% { opacity: 1; transform: scaleY(1); }
+  60% { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+
+input {
+  width: 70%;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  background-color: #7d3ef7;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #9a61f9;
+}
+
+#petGreeting {
+  margin-top: 20px;
+  font-size: 15px;
+  background: #2d0b67;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
+}
