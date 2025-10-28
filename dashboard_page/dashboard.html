@@ -6,7 +6,7 @@
 
  <!-- Some font styles for the website -->
   <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
   <link rel="stylesheet" href="styles.css">
@@ -34,7 +34,7 @@
       <aside class="pet-card">
         <div class="pet-image">
 
-          <!-- simple SVG placeholder for the cat image — replace with your art -->
+          <!-- pic for pet avatar -->
           <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pet avatar">
             <defs>
               <linearGradient id="g1" x1="0" x2="1">
@@ -42,15 +42,7 @@
                 <stop offset="1" stop-color="#e8b3ff" />
               </linearGradient>
             </defs>
-            <rect width="120" height="120" rx="12" fill="url(#g1)"/>
-            <g transform="translate(10,8)">
-              <ellipse cx="46" cy="68" rx="26" ry="18" fill="#f3c8ef"/>
-              <circle cx="40" cy="36" r="28" fill="#f3c8ef"/>
-              <path d="M20 28 q10 -20 40 0" fill="#fff" opacity="0.25"/>
-              <circle cx="30" cy="34" r="4" fill="#5a355d"/>
-              <circle cx="52" cy="34" r="4" fill="#5a355d"/>
-              <path d="M36 46 q8 8 16 0" stroke="#5a355d" stroke-width="2" fill="none" stroke-linecap="round"/>
-            </g>
+
           </svg>
         </div>
 
@@ -74,6 +66,21 @@
     </section>
   </main>
 
+<div class="charts">
+  <h2>Pawprints Over Time</h2>
+  <div class="chart-row">
+    <div class="chart">
+      <canvas id="activityChart"> test </canvas>
+    </div>
+    <div class="chart">
+      <canvas id="typeChart"> test </canvas>
+    </div>
+  </div>
+</div>
 
+  
+   <div class="footer">
+      YOUR JOURNEY DOESN’T END HERE — MORE PAWGRESS AWAITS!
+    </div>
 </body>
 </html>
