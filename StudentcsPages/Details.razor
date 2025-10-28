@@ -1,0 +1,50 @@
+﻿@page "/studentcs/details"
+@using Microsoft.EntityFrameworkCore
+@using CRUDph9.Models
+@inject IDbContextFactory<CRUDph9.Data.CRUDph9Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Studentcs</h2>
+    <hr />
+    @if (studentcs is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@studentcs.Name</dd>
+            <dt class="col-sm-2">Age</dt>
+            <dd class="col-sm-10">@studentcs.Age</dd>
+            <dt class="col-sm-2">Birthday</dt>
+            <dd class="col-sm-10">@studentcs.Birthday</dd>
+        </dl>
+        <div>
+            <a href="@($"/studentcs/edit?id={studentcs.Id}")">Edit</a> |
+            <a href="@($"/studentcs")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Studentcs? studentcs;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        studentcs = await context.Studentcs.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (studentcs is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

@@ -1,0 +1,9 @@
+
+.table.white-text th,
+.table.white-text td {
+    color: white !important;
+}
+
+.table.white-text a {
+    color: #00f !important;
+}

@@ -1,0 +1,99 @@
+﻿@page "/studentcs/edit"
+@using Microsoft.EntityFrameworkCore
+@using CRUDph9.Models
+@inject IDbContextFactory<CRUDph9.Data.CRUDph9Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Studentcs</h2>
+<hr />
+@if (Studentcs is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Studentcs" OnValidSubmit="UpdateStudentcs" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Studentcs.Id" value="@Studentcs.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="Studentcs.Name" class="form-control" />
+                    <ValidationMessage For="() => Studentcs.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age:</label>
+                    <InputNumber id="age" @bind-Value="Studentcs.Age" class="form-control" />
+                    <ValidationMessage For="() => Studentcs.Age" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="birthday" class="form-label">Birthday:</label>
+                    <InputDate id="birthday" @bind-Value="Studentcs.Birthday" class="form-control" />
+                    <ValidationMessage For="() => Studentcs.Birthday" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/studentcs">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Studentcs? Studentcs { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Studentcs ??= await context.Studentcs.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Studentcs is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateStudentcs()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Studentcs!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!StudentcsExists(Studentcs!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/studentcs");
+    }
+
+    private bool StudentcsExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Studentcs.Any(e => e.Id == id);
+    }
+}

@@ -1,0 +1,55 @@
+﻿@page "/studentcs/create"
+@using Microsoft.EntityFrameworkCore
+@using CRUDph9.Models
+@inject IDbContextFactory<CRUDph9.Data.CRUDph9Context> DbFactory
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Studentcs</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Studentcs" OnValidSubmit="AddStudentcs" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="Studentcs.Name" class="form-control" /> 
+                <ValidationMessage For="() => Studentcs.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="age" class="form-label">Age:</label> 
+                <InputNumber id="age" @bind-Value="Studentcs.Age" class="form-control" /> 
+                <ValidationMessage For="() => Studentcs.Age" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="birthday" class="form-label">Birthday:</label> 
+                <InputDate id="birthday" @bind-Value="Studentcs.Birthday" class="form-control" /> 
+                <ValidationMessage For="() => Studentcs.Birthday" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/studentcs">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Studentcs Studentcs { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddStudentcs()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Studentcs.Add(Studentcs);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/studentcs");
+    }
+}

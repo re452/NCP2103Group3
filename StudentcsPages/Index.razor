@@ -1,0 +1,38 @@
+﻿@page "/studentcs"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using CRUDph9.Models
+@using CRUDph9.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<CRUDph9.Data.CRUDph9Context> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="studentcs/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.Studentcs" style="color:white;">
+    <PropertyColumn Property="studentcs => studentcs.Name" />
+    <PropertyColumn Property="studentcs => studentcs.Age" />
+    <PropertyColumn Property="studentcs => studentcs.Birthday" Title="Date of Birth" Format="MM/dd/yyyy"/>
+    
+    <TemplateColumn Context="studentcs">
+        <a href="@($"studentcs/edit?id={studentcs.Id}")">Edit</a> |
+        <a href="@($"studentcs/details?id={studentcs.Id}")">Details</a> |
+        <a href="@($"studentcs/delete?id={studentcs.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private CRUDph9Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
