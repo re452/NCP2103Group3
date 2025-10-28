@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "AQDv5Ms7L+gA0vlrToeEWT1RM5QEKbzlwDY1EoqrN/M=",
+  "Source": "PawGress",
+  "BasePath": "_content/PawGress",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "PawGress/wwwroot",
+      "Source": "PawGress",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/bundle/PawGress.styles.css",
+      "SourceId": "PawGress",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/bundle/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "PawGress.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/bundle/PawGress.styles.css"
+    },
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/projectbundle/PawGress.bundle.scp.css",
+      "SourceId": "PawGress",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "PawGress.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/projectbundle/PawGress.bundle.scp.css"
+    },
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",
+      "SourceId": "PawGress",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "app.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    }
+  ]
+}

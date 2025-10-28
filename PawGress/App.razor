@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@namespace PawGress
+
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>PawGress - Not Found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p class="px-4">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
