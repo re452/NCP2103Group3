@@ -10,8 +10,8 @@ using PawGress.Data;
 namespace PawGress.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251028121418_InitialSeed")]
-    partial class InitialSeed
+    [Migration("20251028165625_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -269,6 +269,27 @@ namespace PawGress.Migrations
                     b.ToTable("UserChallenges");
                 });
 
+            modelBuilder.Entity("PawGress.Models.UserPet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPets");
+                });
+
             modelBuilder.Entity("PawGress.Models.UserTask", b =>
                 {
                     b.Property<int>("Id")
@@ -315,6 +336,25 @@ namespace PawGress.Migrations
                         .IsRequired();
 
                     b.Navigation("Challenge");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PawGress.Models.UserPet", b =>
+                {
+                    b.HasOne("PawGress.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PawGress.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
 
                     b.Navigation("User");
                 });

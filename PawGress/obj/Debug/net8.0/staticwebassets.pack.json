@@ -1,12 +1,16 @@
 {
   "Files": [
     {
-      "Id": "/workspaces/NCP2103Group3/PawGress/obj/Debug/net8.0/scopedcss/projectbundle/PawGress.bundle.scp.css",
-      "PackagePath": "staticwebassets/PawGress.bundle.scp.css"
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Background.png",
+      "PackagePath": "staticwebassets/Images/Background.png"
     },
     {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",
       "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/auth.css",
+      "PackagePath": "staticwebassets/auth.css"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.PawGress.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -1,0 +1,70 @@
+/* Page container */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(100deg, #3A3661 0%, #805A9D 100%);
+}
+
+/* Card for login/signup form */
+.auth-card {
+    background-color: rgba(31,0,61,0.85);
+    padding: 2rem;
+    border-radius: 20px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Inputs */
+.auth-input {
+    width: 100%;
+    padding: 0.6rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Buttons */
+.auth-button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    background-color: #3ee6c8;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth-button:hover {
+    background-color: #2bb3a0;
+}
+
+/* Title */
+.auth-title {
+    font-family: 'Press Start 2P', monospace;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Error messages */
+.error {
+    color: #ff6b6b;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Links */
+.auth-card a {
+    color: #3ee6c8;
+    text-decoration: none;
+}
+
+.auth-card a:hover {
+    text-decoration: underline;
+}
