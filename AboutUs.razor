@@ -1,0 +1,83 @@
+@page "/team"
+@using System.Collections.Generic
+
+<h1 class="page-title">Our Team</h1>
+
+<p class="lead">Meet the people who built this project.</p>
+
+<div class="team-grid">
+    @foreach (var m in Members)
+    {
+        <article class="team-card" aria-labelledby="@($"name-{m.Id}")">
+            <img class="team-photo" src="@m.PhotoUrl" alt="@($"{m.FullName} ({m.PreferredName})")" />
+            <h2 id="@($"name-{m.Id}")" class="team-name">@m.FullName</h2>
+            <p class="nickname">(@m.PreferredName)</p>
+            <h3 class="role-title">Contributions</h3>
+            <p class="contribution">@m.Contribution</p>
+        </article>
+    }
+</div>
+
+@code {
+    // Replace these placeholder members with your actual team info
+    private List<TeamMember> Members { get; set; } = new List<TeamMember>
+    {
+        new TeamMember
+        {
+            Id = 1,
+            FullName = "Ivan Jhed Dumolong",
+            PreferredName = "Ivan",
+            PhotoUrl = "Images/ivan.jpg",
+            Contribution = "Custom AboutUs Page."
+        },
+        new TeamMember
+        {
+            Id = 2,
+            FullName = "Juris Hernandez",
+            PreferredName = "Juris",
+            PhotoUrl = "Images/Hernandez.jpg",
+            Contribution = "Project Setup"
+        },
+        new TeamMember
+        {
+            Id = 3,
+            FullName = "Princess Nicole Rance",
+            PreferredName = "Nicole",
+            PhotoUrl = "Images/nicole.jpg",
+            Contribution = "Summary"
+        },new TeamMember
+        {
+            Id = 4,
+            FullName = "Jhael Reyes",
+            PreferredName = "Jhael",
+            PhotoUrl = "Images/carlos_reyes.jpg",
+            Contribution = "Form Validation and PPT"
+        },
+        new TeamMember
+        {
+            Id = 5,
+            FullName = "Gabriel ",
+            PreferredName = "Gab",
+            PhotoUrl = "Images/Lee.jpg",
+            Contribution = "File/Event Handling, CRUD application."
+        },
+        new TeamMember
+        {
+            Id = 6,
+            FullName = "John Michael Macahilas",
+            PreferredName = "Macky",
+            PhotoUrl = "Images/Macky.jpg",
+            Contribution = "Documentation."
+        }
+    };
+
+    private class TeamMember
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; } = "";
+        public string PreferredName { get; set; } = "";
+        public string PhotoUrl { get; set; } = "";
+        public string Contribution { get; set; } = "";
+    }
+}
+
