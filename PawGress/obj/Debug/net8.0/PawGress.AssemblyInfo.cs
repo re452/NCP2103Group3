@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PawGress")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed8528a4e7ba7ce47a43f9b3aba1d6b0491dd0c5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be4453e8dbed556fdb409404f6df3925e6ee6280")]
 [assembly: System.Reflection.AssemblyProductAttribute("PawGress")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PawGress")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
