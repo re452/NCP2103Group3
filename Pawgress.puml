@@ -1,0 +1,202 @@
+@startuml
+
+title Pawgress - Class Diagram
+
+class DailyQuote {
+  - Id: int
+  + Content: string
+  + Author: string
+  + Date: DateTime
+  + IsActive: bool
+  + GetFormattedQuote(): string
+  + IsToday(): bool
+}
+
+class User {
+  + Username: string
+  + PasswordHash: string
+  + Email: string
+  - Coins: int
+  + CreatedAt: DateTime
+  + LastLogin: DateTime
+  + ValidatePassword(input: string): bool
+  + AddCoins(amount: int): void
+  + SpendCoins(amount: int): bool
+  + GetCoinBalance(): int
+}
+
+class Pet {
+  + Name: string
+  + Type: string
+  - Level: int
+  - Experience: int
+  + ImageUrl: string
+  + LevelUp(): void
+  + AddXP(points: int): void
+  + GetLevel(): int
+}
+
+class PetItem {
+  + Name: string
+  + Description: string
+  + Price: int
+  + Category: string
+  + ImageUrl: string
+  + IsEquippable: bool
+  + ValidatePurchase(user: User): bool
+}
+
+class UserInventory {
+  - UserId: int
+  - ItemId: int
+  + Quantity: int
+  + PurchasedAt: DateTime
+  + IsEquipped: bool
+}
+
+abstract class Challenge {
+  + Title: string
+  + Description: string
+  - ExperiencePoints: int
+  - CoinReward: int
+  + IsActive: bool
+  + {abstract} Validate(): bool
+  + CalculateXP(): int
+  + CalculateCoinReward(): int
+}
+
+class PremadeChallenge {
+  + Difficulty: string
+  + Category: string
+  + Validate(): bool
+}
+
+class CustomChallenge {
+  - CreatorId: int
+  + IsApproved: bool
+  + Validate(): bool
+}
+
+class TaskItem {
+  + Description: string
+  - TargetCount: int
+  - CurrentCount: int
+  - IsComplete: bool
+  - CoinReward: int
+  + DueDate: DateTime?
+  + UpdateProgress(value: int): void
+  + CheckCompleted(): bool
+  + GetProgressPercentage(): double
+  + GetCoinReward(): int
+}
+
+class UserChallenge {
+  - UserId: int
+  - ChallengeId: int
+  + StartedAt: DateTime
+  + CompletedAt: DateTime?
+  + IsCompleted: bool
+}
+
+class UserTask {
+  - UserId: int
+  - TaskId: int
+  + AssignedAt: DateTime
+}
+
+class UserPet {
+  - UserId: int
+  - PetId: int
+  + AdoptedAt: DateTime
+}
+
+class ActivityLog {
+  - Id: int
+  - UserId: int
+  + ActivityType: string
+  + Description: string
+  + CoinsEarned: int
+  + PetXPGained: int
+  + Timestamp: DateTime
+  + Duration: int
+  + GetActivitySummary(): string
+}
+
+class ActivityOverview {
+  - UserId: int
+  + Period: string
+  + TotalActivities: int
+  + TotalCoinsEarned: int
+  + TotalPetXPGained: int
+  + CompletionRate: double
+  + GenerateMonthlyChart(): object
+  + GenerateYearlyChart(): object
+  + GetActivityTrends(): object
+}
+
+' Inheritance relationships
+Challenge <|-- PremadeChallenge
+Challenge <|-- CustomChallenge
+
+' Relationships
+User "1" -- "*" UserChallenge : "participates in"
+Challenge "1" -- "*" UserChallenge : "tracked through"
+User "1" -- "*" UserTask : "assigned"
+TaskItem "1" -- "*" UserTask : "assigned to"
+User "1" -- "1" UserPet : "owns"
+Pet "1" -- "*" UserPet : "owned by"
+User "1" -- "*" ActivityLog : "generates"
+ActivityLog "many" -- "1" ActivityOverview : "aggregates into"
+DailyQuote ||..|| User : "motivates"
+
+' Store relationships
+User "1" -- "*" UserInventory : "owns"
+PetItem "1" -- "*" UserInventory : "purchased as"
+User ||--o{ PetItem : "buys from store"
+Pet "1" -- "*" PetItem : "can use items"
+
+note top of DailyQuote
+  **DAILY QUOTE FEATURE**
+  Public: Content, Author
+  Private: Id
+  Changes daily on dashboard
+  Motivational content
+end note
+
+note right of User
+  **COIN SYSTEM**
+  User earns coins from tasks
+  Coins used in pet store
+  No user level - only pet levels up
+end note
+
+note right of Pet
+  **PET LEVEL SYSTEM**
+  Only pet gains XP and levels up
+  XP from completed activities
+  Visual growth progression
+end note
+
+note right of PetItem
+  **PET STORE**
+  Items for pet customization
+  Food, accessories, toys
+  Purchased with user coins
+end note
+
+note bottom of ActivityOverview
+  **ACTIVITY OVERVIEW**
+  Charts for month/year views
+  Tracks coins earned
+  Shows pet XP trends
+  Visual progress tracking
+end note
+
+note right of Challenge
+  **ABSTRACTION + REWARDS**
+  Base challenge class
+  Rewards both XP and coins
+  Polymorphic validation
+end note
+
+@enduml
