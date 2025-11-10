@@ -1,4 +1,4 @@
-:root{
+:root {
     background: #3A3661;
     background: linear-gradient(100deg, rgba(58, 54, 97, 1) 0%, rgba(128, 90, 157, 1) 100%);
   --panel: rgba(255,255,255,0.06);
@@ -6,17 +6,12 @@
   --muted: rgba(255,255,255,0.8);
   --glass: rgba(255,255,255,0.06);
   --green: #3ee6c8;
+  --accent-color: #8a2be2;
   overflow-y:scroll;
 }
 
 * {
     box-sizing:border-box;
-}
-
-html,body {
-    height: 100%;
-    margin: 0;
-    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial 
 }
 
 body {
@@ -51,7 +46,10 @@ header {
     gap:10px;
 }
 
-
+nav a.active {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
 
 nav a { 
     color: #fff;
@@ -69,7 +67,6 @@ nav a + a {
     gap:12px;
     align-items:center;
 }
-
 
 main { 
     max-width:1200px;
