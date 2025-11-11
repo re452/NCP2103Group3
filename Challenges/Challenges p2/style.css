@@ -1,0 +1,551 @@
+/* --- Root Variables (Colors from your image) --- */
+:root {
+    --bg-dark-purple: #2c1a4d;
+    --card-light-purple: #3a2a5f;
+    --text-white: #ffffff;
+    --text-grey: #a0a0c0; /* Softer grey for inactive text */
+    --highlight-easy-medium: #63d4ac; /* Greenish-blue */
+    --highlight-hard: #f06a8a; /* Reddish-pink */
+    --highlight-accent: #f7b731; /* Yellow/Orange for coins/logo */
+}
+
+/* --- Base & Typography --- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    
+    background-color: #000; /* Fallback for old browsers */
+    background-image: linear-gradient(to top, var(--bg-dark-purple) 0%, #000000 100%);
+    min-height: 100vh; /* Ensures gradient covers full page */
+    
+    color: var(--text-white);
+    margin: 0;
+    font-size: 16px;
+}
+
+h3, h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- Header --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--card-light-purple);
+}
+
+.header-left, .header-right, .main-nav, .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo img {
+    height: 32px;
+    width: auto;
+}
+
+.nav-link {
+    color: var(--text-grey);
+    font-weight: 600;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--text-white);
+}
+
+.nav-link.active {
+    color: var(--text-white);
+    border-bottom-color: var(--highlight-accent);
+}
+
+.coin-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    position: relative; /* Required for the new tooltip */
+    cursor: help;
+}
+
+.coin-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--text-white);
+}
+
+.menu-icon {
+    color: var(--text-grey);
+    cursor: pointer;
+}
+
+/* --- Dashboard Layout --- */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* --- Sidebar Filters --- */
+.sidebar-filters {
+    padding-right: 2rem;
+}
+
+.sidebar-filters h3 {
+    font-size: 0.9rem;
+    color: var(--text-grey);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Search & Clear Styles --- */
+.sidebar-controls {
+    margin-bottom: 1.5rem;
+}
+
+#search-bar {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--card-light-purple);
+    border: 1px solid var(--bg-dark-purple);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-sizing: border-box; /* Ensures padding doesn't break layout */
+    margin-bottom: 0.75rem;
+}
+
+#search-bar::placeholder {
+    color: var(--text-grey);
+}
+
+#search-bar:focus {
+    outline: none;
+    border-color: var(--highlight-easy-medium);
+}
+
+#clear-all-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--highlight-hard);
+    color: var(--text-white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#clear-all-btn:hover {
+    background-color: #c0506e; /* Darker red */
+}
+
+.filter-list li {
+    margin-bottom: 0.5rem;
+}
+
+.filter-category-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.filter-category-header:hover {
+    color: var(--highlight-easy-medium);
+}
+
+.filter-category-header .chevron-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-grey);
+    transition: transform 0.3s ease-out;
+}
+
+.filter-group.active .filter-category-header .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.filter-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding-left: 0.5rem; /* Indent sub-items */
+}
+
+.filter-group.active .filter-submenu {
+    max-height: 500px; /* Animate open */
+}
+
+.filter-link {
+    color: var(--text-grey);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    display: block;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.filter-link:hover {
+    background-color: var(--card-light-purple);
+    color: var(--text-white);
+}
+
+.filter-link.active {
+    background-color: var(--highlight-easy-medium);
+    color: var(--bg-dark-purple);
+    font-weight: 700;
+}
+
+/* --- Exercise Grid --- */
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- Exercise Card --- */
+.exercise-card {
+    background-color: var(--card-light-purple);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, opacity 0.3s, visibility 0.3s;
+}
+
+.exercise-card.hide-card {
+    display: none;
+}
+
+.exercise-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image-container {
+    position: relative;
+    background-color: #000000;
+    height: 200px;
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.add-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--bg-dark-purple);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.add-button:hover {
+    background-color: var(--text-white);
+}
+
+.add-button.added {
+    background-color: var(--highlight-easy-medium);
+    color: var(--bg-dark-purple);
+}
+.add-button.added:hover {
+    background-color: #82e2c0; /* Lighter green on hover */
+}
+
+.card-info {
+    padding: 1.5rem;
+}
+
+/* --- NEW: Card Title Style --- */
+.card-info h3 {
+    color: var(--text-white);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0; /* Space below title */
+}
+
+.card-info .difficulty {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-grey);
+    margin-bottom: 1.25rem;
+}
+
+.difficulty span {
+    font-weight: 700;
+}
+
+.difficulty .active-easy { color: var(--highlight-easy-medium); }
+.difficulty .active-medium { color: var(--highlight-easy-medium); }
+.difficulty .active-hard { color: var(--highlight-hard); }
+
+.card-info h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-grey);
+    margin-top: 1rem;
+}
+
+.card-info p {
+    font-size: 1rem;
+    color: var(--text-white);
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* --- Feather Icons --- */
+.feather {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.add-button .feather {
+    width: 20px;
+    height: 20px;
+    stroke-width: 3;
+}
+
+/* --- Toast Notifications --- */
+.toast {
+    visibility: hidden;
+    min-width: 300px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px; /* Animate up */
+}
+
+.toast-add {
+    background-color: var(--highlight-easy-medium);
+    color: var(--bg-dark-purple);
+}
+
+.toast-remove {
+    background-color: var(--highlight-hard);
+    color: var(--text-white);
+}
+
+/* --- Card Tooltip Styles --- */
+.tooltip-trigger {
+    position: relative; 
+}
+
+.tooltip-label {
+    cursor: help; /* '?' cursor */
+    text-decoration: underline dotted var(--text-grey);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    display: inline-block;
+}
+
+.tooltip-trigger::before,
+.tooltip-trigger::after {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 50%; /* Center relative to the full-width H4 */
+    transform: translateX(-50%);
+    transition: opacity 0.2s, visibility 0.2s, bottom 0.2s;
+    z-index: 20;
+}
+
+.tooltip-trigger::before {
+    content: attr(data-tooltip); /* Gets text from the HTML attribute */
+    bottom: 125%; /* Position above the text */
+    
+    background-color: var(--highlight-easy-medium);
+    color: var(--bg-dark-purple);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 220px; /* Set a fixed width */
+    text-align: center;
+}
+
+.tooltip-trigger::after {
+    content: '';
+    bottom: 125%; /* Position it */
+    transform: translateX(-50%) translateY(16px); /* Aligns with bottom of box */
+    
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--highlight-easy-medium) transparent transparent transparent;
+}
+
+.tooltip-trigger:hover::before,
+.tooltip-trigger:hover::after {
+    visibility: visible;
+    opacity: 1;
+    bottom: 140%; /* Creates a small "pop" effect */
+}
+
+/* --- Back Button --- */
+.back-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: var(--highlight-accent);
+    color: var(--bg-dark-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+    z-index: 100;
+}
+
+.back-button:hover {
+    transform: scale(1.1);
+    background-color: #f7c75a; /* Lighter yellow */
+}
+
+.back-button .feather {
+    width: 28px;
+    height: 28px;
+    stroke-width: 3;
+}
+
+/* --- Header Tooltip --- */
+.tooltip-trigger-header::before,
+.tooltip-trigger-header::after {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 20;
+}
+
+.tooltip-trigger-header::before {
+    content: attr(data-tooltip);
+    top: 140%; /* Position BELOW the element */
+    
+    background-color: var(--highlight-easy-medium);
+    color: var(--bg-dark-purple);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 150px; /* Narrower for this text */
+    text-align: center;
+}
+
+.tooltip-trigger-header::after {
+    content: '';
+    top: 140%; /* Position it */
+    transform: translateX(-50%) translateY(-10px); /* Aligns with top of box */
+    
+    /* The triangle (pointing UP) */
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--highlight-easy-medium) transparent;
+}
+
+.tooltip-trigger-header:hover::before,
+.tooltip-trigger-header:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+.challenge-create-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #f3b26a;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.challenge-create-btn:hover {
+    background-color: #e39a4f;
+}
+.paw-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #b48bff;
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+.paw-toast.fade-out {
+    opacity: 0;
+}

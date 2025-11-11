@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawgress - Challenges</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <img src="LOGO.png" alt="Logo">
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link">DASHBOARD</a>
+                <a href="#" class="nav-link">TASKS</a>
+                <a href="#" class="nav-link active">CHALLENGES</a>
+                <a href="#" class="nav-link">STORE</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span class="coin-count">
+                    <img src="COINS.png" alt="Coin" class="coin-icon"> 0
+                </span>
+                <span class="user-name">MACKY</span>
+                <img src="USER ICON.png" alt="User Avatar" class="user-avatar">
+                <i data-feather="menu" class="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="challenges-layout">
+        <!-- Main Panel -->
+        <main class="main-panel" id="mainPanel">
+            <h1 class="main-title">Challenges</h1>
+
+            <div class="empty-state" id="emptyState">
+                <img src="pet-ghost.png" alt="Pet Ghost" class="pet-image">
+                <p class="empty-text">No challenges yet — your pet’s waiting!</p>
+            </div>
+
+            <a href="../Challenges p2/index.html" class="create-button" id="createBtn">
+                Create your own <i data-feather="plus"></i>
+            </a>
+        </main>
+
+        <!-- Gap -->
+        <div class="panel-gap"></div>
+
+        <!-- Side Panel -->
+        <aside class="side-panel">
+            <h2 class="side-title">Templates</h2>
+            <div class="template-list">
+                <div class="template-card easy" data-title="Morning Routine">
+                    <h3>Morning Routine</h3>
+                    <p>
+                        Push-ups<br>
+                        Downward Dog<br>
+                        Squats<br>
+                        Jumping Jacks<br>
+                        Sit-ups
+                    </p>
+                </div>
+
+                <div class="template-card medium" data-title="Full Body Blast">
+                    <h3>Full Body Blast</h3>
+                    <p>
+                        Burpees<br>
+                        Pull-ups<br>
+                        Lunges<br>
+                        Shoulder Taps<br>
+                        Mountain Climbers
+                    </p>
+                </div>
+
+                <div class="template-card hard" data-title="Cardio Burner">
+                    <h3>Cardio Burner</h3>
+                    <p>
+                        Running<br>
+                        Jump Rope<br>
+                        Cycling<br>
+                        High Knees<br>
+                        Sprints
+                    </p>
+                </div>
+
+                <div class="template-card medium" data-title="Core Strength">
+                    <h3>Core Strength</h3>
+                    <p>
+                        Crunches<br>
+                        Leg Raises<br>
+                        Planks<br>
+                        Russian Twists<br>
+                        Flutter Kicks
+                    </p>
+                </div>
+
+                <div class="template-card easy" data-title="Stretch & Recover">
+                    <h3>Stretch & Recover</h3>
+                    <p>
+                        Side Split<br>
+                        Forward Fold<br>
+                        Hamstring Stretch<br>
+                        Cobra Pose<br>
+                        Neck Roll
+                    </p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>

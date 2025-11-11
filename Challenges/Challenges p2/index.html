@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawgress</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <img src="LOGO.png" alt="Logo">
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link">DASHBOARD</a>
+                <a href="#" class="nav-link">TASKS</a>
+                <a href="#" class="nav-link active">CHALLENGES</a>
+                <a href="#" class="nav-link">STORE</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span class="coin-count tooltip-trigger-header" data-tooltip="This is your coins">
+                    <img src="COINS.png" alt="Coin" class="coin-icon"> 0
+                </span>
+                <span class="user-name">MACKY</span>
+                <img src="USER ICON.png" alt="User Avatar" class="user-avatar">
+                <i data-feather="menu" class="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar-filters">
+            <h3>TASKS SELECTED: <span id="task-counter">0</span></h3>
+            
+            <div class="sidebar-controls">
+                <input type="search" id="search-bar" placeholder="Search exercises...">
+                <button id="clear-all-btn">Clear All</button>
+            </div>
+
+            <ul class="filter-list">
+                
+                <li><a href="#" class="filter-link active">ALL</a></li>
+                
+                <li class="filter-group">
+                    <div class="filter-category-header">
+                        <span>UPPER BODY</span>
+                        <i data-feather="chevron-down" class="chevron-icon"></i>
+                    </div>
+                    <ul class="filter-submenu">
+                        <li><a href="#" class="filter-link">• ARMS</a></li>
+                        <li><a href="#" class="filter-link">• CHEST</a></li>
+                        <li><a href="#" class="filter-link">• SHOULDERS</a></li>
+                        <li><a href="#" class="filter-link">• BACK</a></li>
+                        <li><a href="#" class="filter-link">• CORE</a></li>
+                    </ul>
+                </li>
+
+                <li class="filter-group">
+                    <div class="filter-category-header">
+                        <span>LOWER BODY</span>
+                        <i data-feather="chevron-down" class="chevron-icon"></i>
+                    </div>
+                    <ul class="filter-submenu">
+                        <li><a href="#" class="filter-link">• QUAD</a></li>
+                        <li><a href="#" class="filter-link">• GLUTES</a></li>
+                        <li><a href="#" class="filter-link">• CALVES</a></li>
+                        <li><a href="#" class="filter-link">• HAMSTRING</a></li>
+                    </ul>
+                </li>
+
+                <li class="filter-group">
+                    <div class="filter-category-header">
+                        <span>CARDIO</span>
+                        <i data-feather="chevron-down" class="chevron-icon"></i>
+                    </div>
+                    <ul class="filter-submenu">
+                        <li><a href="#" class="filter-link">• CYCLING</a></li>
+                        <li><a href="#" class="filter-link">• DANCING</a></li>
+                        <li><a href="#" class="filter-link">• RUNNING</a></li>
+                        <li><a href="#" class="filter-link">• OTHER</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </aside>
+
+        <main class="exercise-grid">
+
+            <div class="exercise-card" data-task-id="task-1">
+                <div class="card-image-container">
+                    <img src="card 1 image.png" alt="Pushup Variation">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Pushup Variation</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy">EASY</span> / <span class="d-medium active-medium">MEDIUM</span> / <span class="d-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• CHEST</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• TRICEPS, SHOULDERS</p>
+                </div>
+            </div>
+
+            <div class="exercise-card" data-task-id="task-2">
+                <div class="card-image-container">
+                    <img src="card 2 image.png" alt="Pistol Squat">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Pistol Squat</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy">EASY</span> / <span class="d-medium">MEDIUM</span> / <span class="d-hard active-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• QUADS</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• GLUTES, CORE</p>
+                </div>
+            </div>
+
+            <div class="exercise-card" data-task-id="task-3">
+                <div class="card-image-container">
+                    <img src="card 3 image.png" alt="Pull Up">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Pull Up</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy">EASY</span> / <span class="d-medium">MEDIUM</span> / <span class="d-hard active-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• BACK</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• BICEPS, CORE, SHOULDERS</p>
+                </div>
+            </div>
+
+            <div class="exercise-card" data-task-id="task-4">
+                <div class="card-image-container">
+                    <img src="card 6 image.png" alt="Squat">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Squat</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy active-easy">EASY</span> / <span class="d-medium">MEDIUM</span> / <span class="d-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• LEGS</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• GLUTES, CORE, HAMSTRING</p>
+                </div>
+            </div>
+
+            <div class="exercise-card" data-task-id="task-5">
+                <div class="card-image-container">
+                    <img src="card 5 image.png" alt="Running">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Running</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy">EASY</span> / <span class="d-medium active-medium">MEDIUM</span> / <span class="d-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• CARDIO</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• QUADS, CALVES, HAMSTRING</p>
+                </div>
+            </div>
+
+            <div class="exercise-card" data-task-id="task-6">
+                <div class="card-image-container">
+                    <img src="card 4 image.png" alt="Side Split">
+                    <button class="add-button"><i data-feather="plus"></i></button>
+                </div>
+                <div class="card-info">
+                    <h3>Side Split</h3>
+                    <p class="difficulty">DIFFICULTY: <span class="d-easy">EASY</span> / <span class="d-medium">MEDIUM</span> / <span class="d-hard active-hard">HARD</span></p>
+                    <h4 class="tooltip-trigger" data-tooltip="The primary muscle group targeted by this exercise.">
+                        <span class="tooltip-label">MAIN MUSCLE:</span>
+                    </h4>
+                    <p>• HAMSTRING</p>
+                    <h4 class="tooltip-trigger" data-tooltip="These muscles provide support and are strengthened secondarily.">
+                        <span class="tooltip-label">SECONDARY MUSCLE:</span>
+                    </h4>
+                    <p>• HIP FLEXORS, ADDUCTORS</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <a href="../Challenges p1/index.html" class="back-button">
+        <i data-feather="arrow-left"></i>
+    </a>
+
+    <div id="add-toast" class="toast toast-add">
+        <p>The task was successfully added</p>
+    </div>
+    <div id="remove-toast" class="toast toast-remove">
+        <p>The task was removed</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elements ---
+            const addButtons = document.querySelectorAll('.add-button');
+            const taskCounter = document.getElementById('task-counter');
+            const addToast = document.getElementById('add-toast');
+            const removeToast = document.getElementById('remove-toast');
+            const allCards = document.querySelectorAll('.exercise-card'); 
+            const searchBar = document.getElementById('search-bar');
+            const clearAllButton = document.getElementById('clear-all-btn');
+            
+            // --- State Variables ---
+            let selectedTaskCount = 0;
+            let addToastTimer;
+            let removeToastTimer;
+            let addedTaskIDs = []; 
+
+            // --- Function to Save Progress ---
+            function saveProgress() {
+                localStorage.setItem('pawgressTasks', JSON.stringify(addedTaskIDs));
+            }
+
+            // --- Function to Load Progress ---
+            function loadProgress() {
+                const savedTasks = localStorage.getItem('pawgressTasks');
+                
+                if (savedTasks) {
+                    addedTaskIDs = JSON.parse(savedTasks);
+                    selectedTaskCount = addedTaskIDs.length;
+                    taskCounter.textContent = selectedTaskCount;
+                    
+                    addedTaskIDs.forEach(taskId => {
+                        const card = document.querySelector(`.exercise-card[data-task-id="${taskId}"]`);
+                        if (card) {
+                            const button = card.querySelector('.add-button');
+                            button.classList.add('added');
+                            button.innerHTML = '<i data-feather="check"></i>';
+                        }
+                    });
+                }
+                feather.replace(); 
+            }
+
+            // --- Task Toggle Logic ---
+            addButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const parentCard = button.closest('.exercise-card');
+                    const taskId = parentCard.dataset.taskId;
+                    if (!taskId) return;
+
+                    clearTimeout(addToastTimer);
+                    clearTimeout(removeToastTimer);
+                    addToast.classList.remove('show');
+                    removeToast.classList.remove('show');
+
+                    if (button.classList.contains('added')) {
+                        button.classList.remove('added');
+                        button.innerHTML = '<i data-feather="plus"></i>';
+                        selectedTaskCount--;
+                        addedTaskIDs = addedTaskIDs.filter(id => id !== taskId);
+                        
+                        removeToast.classList.add('show');
+                        removeToastTimer = setTimeout(() => {
+                            removeToast.classList.remove('show');
+                        }, 3000);
+                    } else {
+                        button.classList.add('added');
+                        button.innerHTML = '<i data-feather="check"></i>';
+                        selectedTaskCount++;
+                        addedTaskIDs.push(taskId);
+                        
+                        addToast.classList.add('show');
+                        addToastTimer = setTimeout(() => {
+                            addToast.classList.remove('show');
+                        }, 3000);
+                    }
+                    saveProgress(); 
+                    feather.replace(); 
+                    taskCounter.textContent = selectedTaskCount;
+                });
+            });
+
+            // --- Accordion Logic ---
+            const categoryHeaders = document.querySelectorAll('.filter-category-header');
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const parentGroup = header.closest('.filter-group');
+                    if (parentGroup) {
+                        parentGroup.classList.toggle('active');
+                    }
+                });
+            });
+
+            // --- Live Search Logic ---
+            searchBar.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                allCards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    const isMatch = cardText.includes(searchTerm);
+                    card.classList.toggle('hide-card', !isMatch); 
+                });
+            });
+
+            // --- Clear All Logic ---
+            clearAllButton.addEventListener('click', () => {
+                addedTaskIDs = [];
+                selectedTaskCount = 0;
+                taskCounter.textContent = 0;
+                saveProgress(); 
+                
+                addButtons.forEach(button => {
+                    button.classList.remove('added');
+                    button.innerHTML = '<i data-feather="plus"></i>';
+                });
+                feather.replace(); 
+            });
+
+            // --- NEW: Create Challenge Button ---
+            const challengeButton = document.createElement('button');
+            challengeButton.textContent = "Create Challenge";
+            challengeButton.classList.add('challenge-create-btn');
+            document.querySelector('.dashboard-container').appendChild(challengeButton);
+
+            challengeButton.addEventListener('click', () => {
+                if (addedTaskIDs.length === 0) {
+                    alert("🐾 Please select at least one task before creating a challenge!");
+                    return;
+                }
+
+                const challengeName = prompt("Name your new challenge:");
+                if (!challengeName) return;
+
+                // 🐾 Collect all selected exercises’ names for display
+                const selectedCards = addedTaskIDs.map(id => {
+                    const card = document.querySelector(`.exercise-card[data-task-id="${id}"]`);
+                    return card ? card.querySelector("h3").innerText : "Unnamed Task";
+                });
+
+                // 🐾 Format the challenge like p1 expects
+                const challengeData = {
+                    title: challengeName,
+                    difficulty: "custom",
+                    exercises: selectedCards
+                };
+
+                const savedChallenges = JSON.parse(localStorage.getItem("pawgressChallenges") || "[]");
+                savedChallenges.push(challengeData);
+                localStorage.setItem("pawgressChallenges", JSON.stringify(savedChallenges));
+
+                const pawToast = document.createElement("div");
+                pawToast.classList.add("paw-toast");
+                pawToast.textContent = `Challenge "${challengeName}" created successfully! 💪🐾`;
+                document.body.appendChild(pawToast);
+
+                setTimeout(() => {
+                    pawToast.classList.add("fade-out");
+                    setTimeout(() => pawToast.remove(), 500);
+                }, 2500);
+
+
+                // Reset selections
+                addedTaskIDs = [];
+                selectedTaskCount = 0;
+                taskCounter.textContent = 0;
+                localStorage.setItem('pawgressTasks', JSON.stringify([]));
+                document.querySelectorAll('.add-button').forEach(button => {
+                    button.classList.remove('added');
+                    button.innerHTML = '<i data-feather="plus"></i>';
+                });
+                feather.replace();
+            });
+
+            loadProgress();
+        });
+        </script>
+
+
+</body>
+</html>
