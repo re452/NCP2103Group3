@@ -1,42 +1,99 @@
 @page "/signup"
-@layout MainLayout
-@using Microsoft.AspNetCore.Components.Forms
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
 @using PawGress.Models
+@using PawGress.Data
 @inject NavigationManager Navigation
+@inject AppDbContext Db
 
 <link href="app.css" rel="stylesheet" />
 <link href="auth.css" rel="stylesheet" />
 
-<div class="auth-page">
-    <div class="auth-card">
-        <EditForm FormName="signupForm" Model="@newUser" OnValidSubmit="HandleSignup">
-            <h1 class="auth-title">SIGN UP</h1>
+<div class="auth-card" style="color:white">
+    <!-- use Blazor onsubmit and prevent the browser default -->
+    <form @onsubmit="HandleSignup" @onsubmit:preventDefault>
+        <h1 class="auth-title">SIGN UP</h1>
 
-            <InputText @bind-Value="newUser.Username" placeholder="Username" class="auth-input" />
-            <InputText @bind-Value="newUser.Password" type="password" placeholder="Password" class="auth-input" />
+        <input @bind="signupUser.Username" placeholder="Username" class="auth-input" />
+        <input @bind="signupUser.Password" type="password" placeholder="Password" class="auth-input" />
+        <input @bind="confirmPassword" type="password" placeholder="Confirm Password" class="auth-input" />
 
-            <button type="submit" class="auth-button">Sign Up</button>
+        <button type="submit" class="auth-button" disabled="@isSubmitting">
+            @(isSubmitting ? "Creating account..." : "Sign Up")
+        </button>
 
-            <p>Already have an account? <a href="/">Login</a></p>
+        <p style="color:white">
+            Already have an account? <a href="/" style="color:#3ee6c8">Login</a>
+        </p>
 
-            @if (!string.IsNullOrEmpty(message))
-            {
-                <p class="@messageClass">@message</p>
-            }
-        </EditForm>
-    </div>
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <p style="color:white">@message</p>
+        }
+    </form>
 </div>
 
 @code {
-    private User newUser = new();
+    private User signupUser = new();
+    private string confirmPassword = string.Empty;
     private string message = string.Empty;
-    private string messageClass = "success";
+    private bool isSubmitting = false;
 
     private async Task HandleSignup()
     {
-        message = "✅ Signed up successfully! Redirecting...";
-        messageClass = "success";
-        await Task.Delay(1200);
-        Navigation.NavigateTo("/");
+        try
+        {
+            isSubmitting = true;
+            message = string.Empty;
+            StateHasChanged();
+
+            // Basic validation
+            if (string.IsNullOrWhiteSpace(signupUser.Username) ||
+                string.IsNullOrWhiteSpace(signupUser.Password) ||
+                string.IsNullOrWhiteSpace(confirmPassword))
+            {
+                message = "⚠️ All fields are required.";
+                isSubmitting = false;
+                return;
+            }
+
+            // Password confirmation check
+            if (signupUser.Password != confirmPassword)
+            {
+                message = "⚠️ Passwords do not match.";
+                isSubmitting = false;
+                return;
+            }
+
+            // Check duplicate username
+            var existing = await Db.Users.FirstOrDefaultAsync(u => u.Username == signupUser.Username);
+            if (existing != null)
+            {
+                message = "⚠️ Username already exists.";
+                isSubmitting = false;
+                return;
+            }
+
+            // Save user
+            Db.Users.Add(signupUser);
+            await Db.SaveChangesAsync();
+
+            message = $"✅ Account created for: {signupUser.Username}";
+            StateHasChanged();
+
+            await Task.Delay(800);
+
+            // Redirect to login
+            Navigation.NavigateTo("/", forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            message = $"❌ Error: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
     }
 }

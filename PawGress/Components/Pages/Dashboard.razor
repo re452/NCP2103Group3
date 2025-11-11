@@ -1,6 +1,26 @@
 @page "/dashboard"
 
-<h1>Dashboard</h1>
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
 
-<!-- You can later add your friend's HTML and CSS here -->
-<p>Welcome to your dashboard!</p>
+<h3>Click Test</h3>
+
+<p>Count: @count</p>
+
+<button class="btn btn-primary" @onclick="Increment">Click Me</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@code {
+    private int count = 0;
+    private string message = "";
+
+    private void Increment()
+    {
+        count++;
+        message = $"You clicked {count} time(s)";
+    }
+}

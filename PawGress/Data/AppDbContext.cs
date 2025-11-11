@@ -30,9 +30,8 @@ namespace PawGress.Data
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "testuser", Password = "password" }
+                new User { Id = 1, Username = "testuser", Password = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=" }
             );
-
             // Seed Tasks (normal tasks)
             modelBuilder.Entity<TaskItem>().HasData(
                 new TaskItem { Id = 1, Name = "10 Push-ups", XP = 10, Category = "Upper", IsHabit = false, UserId = 0 },

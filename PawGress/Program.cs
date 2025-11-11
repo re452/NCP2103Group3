@@ -5,12 +5,12 @@ using PawGress.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=pawgress.db"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? "Data Source=pawgress.db"));
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<PetService>();
@@ -19,14 +19,12 @@ builder.Services.AddScoped<ChallengeService>();
 
 var app = builder.Build();
 
-// --- Initialize DB ---
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    DbInitializer.Initialize(context);
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    DbInitializer.Initialize(db);
 }
 
-// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
