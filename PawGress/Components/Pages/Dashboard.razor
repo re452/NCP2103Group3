@@ -1,6 +1,12 @@
 @page "/dashboard"
 
-<h1>Dashboard</h1>
-
-<!-- You can later add your friend's HTML and CSS here -->
-<p>Welcome to your dashboard!</p>
+<!-- Embed the pre-built static dashboard page from wwwroot/dashboard_page -->
+<div style="width:100%; height:100vh; box-sizing:border-box; overflow:hidden;">
+	<iframe src="/dashboard_page/dashboard.html"
+			title="PawGress Dashboard"
+			style="border:0; width:100%; height:100%;"
+			sandbox="allow-scripts allow-same-origin allow-forms">
+		Your browser does not support iframes. Open the dashboard at
+		<a href="/dashboard_page/dashboard.html">/dashboard_page/dashboard.html</a>.
+	</iframe>
+</div>

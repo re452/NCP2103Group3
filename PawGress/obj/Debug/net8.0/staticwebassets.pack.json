@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets/auth.css"
     },
     {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/dashboard_page/dashboard.html",
+      "PackagePath": "staticwebassets/dashboard_page/dashboard.html"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/dashboard_page/styles.css",
+      "PackagePath": "staticwebassets/dashboard_page/styles.css"
+    },
+    {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.PawGress.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
