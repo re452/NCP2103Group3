@@ -1,0 +1,52 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.main-layout {
+    background-image: url('Images/Background.png'); /* your background image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    background: rgba(31, 0, 61, 0.9); /* semi-transparent purple */
+    padding: 2rem;
+    border-radius: 20px;
+    width: 320px;
+    color: white;
+    text-align: center;
+}
+
+.auth-input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #6ce5e8;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-title {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 1rem;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 10px;
+}

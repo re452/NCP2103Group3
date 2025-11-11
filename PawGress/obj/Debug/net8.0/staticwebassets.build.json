@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "HRq+rE5lKUxlF8+xAGpJ/asx3YfKQm5rsUL0L7bBU7k=",
+  "Source": "PawGress",
+  "BasePath": "_content/PawGress",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "PawGress/wwwroot",
+      "Source": "PawGress",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",
+      "SourceId": "PawGress",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "app.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    },
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/auth.css",
+      "SourceId": "PawGress",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "auth.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/auth.css"
+    },
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Background.png",
+      "SourceId": "PawGress",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "Images/Background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/Background.png"
+    }
+  ]
+}

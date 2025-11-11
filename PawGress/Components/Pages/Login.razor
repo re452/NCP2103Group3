@@ -1,0 +1,42 @@
+@page "/"
+@layout MainLayout
+@using Microsoft.AspNetCore.Components.Forms
+@using PawGress.Models
+@inject NavigationManager Navigation
+
+<link href="app.css" rel="stylesheet" />
+<link href="auth.css" rel="stylesheet" />
+
+<div class="auth-page">
+    <div class="auth-card">
+        <EditForm FormName="loginForm" Model="@loginUser" OnValidSubmit="HandleLogin">
+            <h1 class="auth-title">LOGIN</h1>
+
+            <InputText @bind-Value="loginUser.Username" placeholder="Username" class="auth-input" />
+            <InputText @bind-Value="loginUser.Password" type="password" placeholder="Password" class="auth-input" />
+
+            <button type="submit" class="auth-button">Login</button>
+
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <p class="@messageClass">@message</p>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private User loginUser = new();
+    private string message = string.Empty;
+    private string messageClass = "success";
+
+    private async Task HandleLogin()
+    {
+        message = "✅ Login successful! Redirecting...";
+        messageClass = "success";
+        await Task.Delay(1000);
+        Navigation.NavigateTo("/dashboard");
+    }
+}

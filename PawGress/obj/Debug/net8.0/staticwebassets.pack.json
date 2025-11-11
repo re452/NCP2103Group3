@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Background.png",
+      "PackagePath": "staticwebassets/Images/Background.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/auth.css",
+      "PackagePath": "staticwebassets/auth.css"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.PawGress.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.PawGress.props",
+      "PackagePath": "build\\PawGress.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.PawGress.props",
+      "PackagePath": "buildMultiTargeting\\PawGress.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.PawGress.props",
+      "PackagePath": "buildTransitive\\PawGress.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
