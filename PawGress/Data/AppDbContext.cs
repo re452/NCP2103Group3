@@ -28,10 +28,16 @@ namespace PawGress.Data
                 new Pet { Id = 4, Name = "Aurora", Rarity = "Mythical", XP = 0 }
             );
 
-            // Seed Users
-            modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "testuser", Password = "password" }
-            );
+            // Seed Users (store hashed password for the built-in test user)
+            // Use SHA256 hashing consistent with UserService
+            var pwdBytes = System.Text.Encoding.UTF8.GetBytes("password");
+            using (var sha = System.Security.Cryptography.SHA256.Create())
+            {
+                var hashed = Convert.ToBase64String(sha.ComputeHash(pwdBytes));
+                modelBuilder.Entity<User>().HasData(
+                    new User { Id = 1, Username = "testuser", Password = hashed }
+                );
+            }
 
             // Seed Tasks (normal tasks)
             modelBuilder.Entity<TaskItem>().HasData(

@@ -1,15 +1,37 @@
+@using Microsoft.AspNetCore.Components.Authorization
+
 <nav class="app-nav">
 	<ul>
 		<li><a href="/">Home</a></li>
 		<li><a href="/dashboard">Dashboard</a></li>
 		<li><a href="/tasks">Tasks</a></li>
 		<li><a href="/store">Store</a></li>
-		<li><a href="/login">Login</a></li>
-		<li><a href="/signup">Signup</a></li>
+
+		<AuthorizeView>
+			<Authorized>
+				<li><a href="#">Hello, @context.User.Identity?.Name</a></li>
+				<li><a href="#" @onclick="Logout">Logout</a></li>
+			</Authorized>
+			<NotAuthorized>
+				<li><a href="/">Login</a></li>
+				<li><a href="/signup">Signup</a></li>
+			</NotAuthorized>
+		</AuthorizeView>
 	</ul>
 </nav>
 
+@code {
+	[Inject] protected NavigationManager Nav { get; set; } = default!;
+
+	private void Logout()
+	{
+		// Perform a full navigation to the logout endpoint so browser receives the cookie sign-out
+		Nav.NavigateTo("/api/auth/logout", forceLoad: true);
+	}
+}
+
 <style>
 	.app-nav ul { list-style:none; padding:0; display:flex; gap:12px; }
-	.app-nav a { color:inherit; text-decoration:none; }
+	.app-nav a { color:inherit; text-decoration:none; cursor:pointer }
+	.app-nav li { list-style:none }
 </style>

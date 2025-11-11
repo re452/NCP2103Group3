@@ -1,42 +1,41 @@
 @page "/signup"
 @layout MainLayout
-@using Microsoft.AspNetCore.Components.Forms
-@using PawGress.Models
 @inject NavigationManager Navigation
 
 <link href="app.css" rel="stylesheet" />
 <link href="auth.css" rel="stylesheet" />
 
-<div class="auth-page">
-    <div class="auth-card">
-        <EditForm FormName="signupForm" Model="@newUser" OnValidSubmit="HandleSignup">
-            <h1 class="auth-title">SIGN UP</h1>
-
-            <InputText @bind-Value="newUser.Username" placeholder="Username" class="auth-input" />
-            <InputText @bind-Value="newUser.Password" type="password" placeholder="Password" class="auth-input" />
-
-            <button type="submit" class="auth-button">Sign Up</button>
-
-            <p>Already have an account? <a href="/">Login</a></p>
-
-            @if (!string.IsNullOrEmpty(message))
-            {
-                <p class="@messageClass">@message</p>
-            }
-        </EditForm>
-    </div>
-</div>
-
 @code {
-    private User newUser = new();
     private string message = string.Empty;
-    private string messageClass = "success";
+    private string messageClass = "error";
 
-    private async Task HandleSignup()
+    protected override void OnInitialized()
     {
-        message = "✅ Signed up successfully! Redirecting...";
-        messageClass = "success";
-        await Task.Delay(1200);
-        Navigation.NavigateTo("/");
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("error", out var val))
+        {
+            if (val == "exists") message = "Username already exists.";
+            else if (val == "empty") message = "Username and password are required.";
+            else message = "Could not sign up.";
+        }
     }
 }
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h1 class="auth-title">SIGN UP</h1>
+
+        <form method="post" action="/api/auth/register">
+            <input name="username" placeholder="Username" class="auth-input" />
+            <input name="password" type="password" placeholder="Password" class="auth-input" />
+            <button type="submit" class="auth-button">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="/">Login</a></p>
+
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <p class="@messageClass">@message</p>
+        }
+    </div>
+</div>
