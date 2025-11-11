@@ -21,6 +21,22 @@
       "PackagePath": "staticwebassets/dashboard_page/styles.css"
     },
     {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/store_page/index.html",
+      "PackagePath": "staticwebassets/store_page/index.html"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/store_page/styles.css",
+      "PackagePath": "staticwebassets/store_page/styles.css"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/task_page/style.css",
+      "PackagePath": "staticwebassets/task_page/style.css"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/task_page/task.html",
+      "PackagePath": "staticwebassets/task_page/task.html"
+    },
+    {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.PawGress.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

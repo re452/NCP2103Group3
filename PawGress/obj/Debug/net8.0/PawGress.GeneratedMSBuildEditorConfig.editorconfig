@@ -50,6 +50,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9TaWdudXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/Store.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9TdG9yZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/Tasks.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9UYXNrcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/NCP2103Group3/PawGress/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
