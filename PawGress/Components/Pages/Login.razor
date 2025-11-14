@@ -9,10 +9,10 @@
 @inject PetService PetService
 @inject NavigationManager Navigation
 
-<link href="app.css" rel="stylesheet" />
-<link href="auth.css" rel="stylesheet" />
+<!-- Pixelated font -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
-<div class="auth-card" style="color:white">
+<div class="auth-card">
     <EditForm Model="@loginUser" OnValidSubmit="HandleLogin" FormName="loginForm">
         <h1 class="auth-title">LOGIN</h1>
 
@@ -23,16 +23,119 @@
             @(isSubmitting ? "Checking..." : "Login")
         </button>
 
-        <p style="color:white">
-            Don't have an account? <a href="/signup" style="color:#3ee6c8">Sign up</a>
+        <p class="auth-footer">
+            Don't have an account? <a href="/signup">Sign up</a>
         </p>
 
         @if (!string.IsNullOrEmpty(message))
         {
-            <p style="color:white">@message</p>
+            <p class="auth-message">@message</p>
         }
     </EditForm>
 </div>
+
+<style>
+    /* --- Global Pixel Font --- */
+    * {
+        font-family: 'Press Start 2P', cursive;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-image: url('/Images/pixel.png');
+        color: #fff;
+    }
+
+    /* --- Auth Card --- */
+    .auth-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    form {
+        background-color: #36274f;
+        padding: 30px 20px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 300px;
+    }
+
+    .auth-title {
+        font-size: 1rem; /* small because pixel font is large visually */
+        margin-bottom: 10px;
+        text-align: center;
+        color: #3ee6c8;
+    }
+
+    /* --- Inputs --- */
+    .auth-input {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid #3ee6c8;
+        border-radius: 6px;
+        background-color: #4f3973;
+        color: #fff;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    .auth-input::placeholder {
+        color: #bbb;
+    }
+
+    /* --- Button --- */
+    .auth-button {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 6px;
+        background-color: #3ee6c8;
+        color: #000;
+        cursor: pointer;
+        font-family: 'Press Start 2P', cursive;
+        transition: background 0.2s;
+    }
+
+    .auth-button:disabled {
+        background-color: #7fc9bf;
+        cursor: not-allowed;
+    }
+
+    .auth-button:hover:not(:disabled) {
+        background-color: #36cbb0;
+    }
+
+    /* --- Footer & links --- */
+    .auth-footer {
+        font-size: 0.6rem;
+        text-align: center;
+    }
+
+    .auth-footer a {
+        color: #3ee6c8;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Message text --- */
+    .auth-message {
+        font-size: 0.6rem;
+        text-align: center;
+        color: #ff4c4c;
+    }
+</style>
 
 @code {
     private User loginUser = new();
@@ -47,7 +150,6 @@
             message = string.Empty;
             StateHasChanged();
 
-            // 1️⃣ Empty field check
             if (string.IsNullOrWhiteSpace(loginUser.Username) ||
                 string.IsNullOrWhiteSpace(loginUser.Password))
             {
@@ -55,7 +157,6 @@
                 return;
             }
 
-            // 2️⃣ Authenticate user
             var existingUser = await UserService.AuthenticateAsync(loginUser.Username, loginUser.Password);
             if (existingUser == null)
             {
@@ -63,15 +164,12 @@
                 return;
             }
 
-            // 3️⃣ Ensure user has starter pets (handled automatically in PetService)
             var pets = await PetService.GetUserPetsAsync(existingUser.Id);
 
-            // 4️⃣ Success
             message = $"✅ Welcome back, {existingUser.Username}!";
             StateHasChanged();
             await Task.Delay(800);
 
-            // Redirect to "Your Pets" page
             Navigation.NavigateTo("/dashboard", forceLoad: true);
         }
         catch (Exception ex)

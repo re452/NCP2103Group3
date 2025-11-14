@@ -4,21 +4,28 @@ namespace PawGress.Models
 {
     public class TaskItem
     {
-        [Key]
         public int Id { get; set; }
 
+        // USER
+        [Required]
+        public string UserName { get; set; } = string.Empty;
+
+        // TASK BASICS
+        [Required]
         public string Name { get; set; } = string.Empty;
 
-        public int XP { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        // Category: Upper, Lower, Core, Cardio
-        public string Category { get; set; } = "All";
+        // STATUS
+        public bool IsCompleted { get; set; } = false;
 
-        // True if this task is a habit
+        // EXTRA FIELDS
+        public int XP { get; set; } = 0;
+        public string Category { get; set; } = "General";
         public bool IsHabit { get; set; } = false;
 
-        public int UserId { get; set; } = 0; // 0 if global
+        public int UserId { get; set; } = 0;
 
-        public bool Completed { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

@@ -7,66 +7,77 @@
 @inject UserService UserService
 @inject NavigationManager Navigation
 
-<!-- INCLUDE NAVMENU COMPONENT -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
 <NavMenu />
 
-<!-- DASHBOARD CONTENT -->
-<div class="dashboard-container">
-    <!-- Section 1: Greeting and popular pet -->
-    <section class="section1">
-        <h1>Hello, Pawthlete!</h1>
-        <p>Welcome to your dashboard — where every step, stretch, and goal brings out your best self.</p>
+<div class="page-background">
+    <div class="dashboard-container">
+        <!-- Section 1: Greeting and popular pet -->
+        <section class="section1">
+            <h1>Hello, Pawthlete!</h1>
+            <p>Welcome to your dashboard — where every step, stretch, and goal brings out your best self.</p>
 
-        <div class="popular-pet-card">
-            <img src="/Images/Fluffy.png" alt="Popular Pet" class="pet-image" />
-            <div class="pet-info">
-                <h2>DIVA</h2>
-                <p class="pet-description">
-                    She struts like she owns the place — and honestly, she does. Diva demands attention, gives side-eyes like a pro, and only cuddles when she feels like it. Beneath that sass is a loyal heart that always comes back for treats.
-                </p>
-                <div class="pet-stats">
-                    <div class="stat-bar">
-                        <label>❤️</label>
-                        <div class="bar"><div class="fill" style="width:80%"></div></div>
+            <div class="popular-pet-card">
+                <img src="/Images/Fluffy.png" alt="Popular Pet" class="pet-image" />
+                <div class="pet-info">
+                    <h2>DIVA</h2>
+                    <p class="pet-description">
+                        She struts like she owns the place — and honestly, she does. Diva demands attention, gives side-eyes like a pro, and only cuddles when she feels like it. Beneath that sass is a loyal heart that always comes back for treats.
+                    </p>
+                    <div class="pet-stats">
+                        <div class="stat-bar">
+                            <label>❤️</label>
+                            <div class="bar"><div class="fill" style="width:80%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <label>⚡</label>
+                            <div class="bar"><div class="fill" style="width:60%"></div></div>
+                        </div>
                     </div>
-                    <div class="stat-bar">
-                        <label>⚡</label>
-                        <div class="bar"><div class="fill" style="width:60%"></div></div>
-                    </div>
+                    <button class="your-pets-btn" @onclick="@(() => Navigation.NavigateTo("/yourpets"))">Your Pets</button>
                 </div>
-                <button class="your-pets-btn" @onclick="@(() => Navigation.NavigateTo("/yourpets"))">Your Pets</button>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Section 2: Graphs & inspirational quote -->
-    <section class="section2">
-        <h3>Pawprints Over Time</h3>
-        <div class="graphs">
-            <img src="/Images/line-chart-placeholder.png" alt="Line graph" class="line-graph" />
-            <img src="/Images/pie-chart-placeholder.png" alt="Pie chart" class="pie-chart" />
-        </div>
-        <p class="inspiration">YOUR JOURNEY DOESN’T END HERE — MORE PAWGRESS AWAITS!</p>
-    </section>
+        <!-- Section 2: Graphs & inspirational quote -->
+        <section class="section2">
+            <h3>Pawprints Over Time</h3>
+            <div class="graphs">
+                <img src="/Images/line-chart-placeholder.png" alt="Line graph" class="line-graph" />
+                <img src="/Images/pie-chart-placeholder.png" alt="Pie chart" class="pie-chart" />
+            </div>
+            <p class="inspiration">YOUR JOURNEY DOESN’T END HERE — MORE PAWGRESS AWAITS!</p>
+        </section>
+    </div>
 </div>
 
 <style>
-/* Remove default margin/padding and ensure full height */
-html, body {
-    margin: 0;
-    padding: 0;
+
+.page-background {
+    min-height: 100vh;
     width: 100%;
-    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/Images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
 }
 
-/* Dashboard gradient background using your palette */
+/* --- Dashboard Container --- */
 .dashboard-container {
-    font-family: 'Segoe UI', sans-serif;
-    color: #fff;
     padding: 20px;
-    background: linear-gradient(180deg, #44346B, #4C3571, #4F3973, #4A356B);
-    min-height: 100vh;
+    max-width: 1000px;
+    width: 100%;
     box-sizing: border-box;
+    background-color: #1b102d; /* match NavMenu/Tasks */
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
 /* Section 1 */
@@ -83,7 +94,7 @@ html, body {
 .popular-pet-card {
     display: flex;
     gap: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
     padding: 20px;
     border-radius: 15px;
     align-items: center;
@@ -139,6 +150,7 @@ html, body {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
 }
 
 /* Section 2 */
@@ -160,6 +172,7 @@ html, body {
     text-align: center;
     margin-top: 20px;
     font-weight: bold;
+    font-family: 'Press Start 2P', cursive;
 }
 </style>
 
@@ -174,7 +187,6 @@ html, body {
 
     protected override async Task OnInitializedAsync()
     {
-        // Load pet info
         var allPets = await PetService.GetAllPetsAsync();
         if (allPets.Any())
         {

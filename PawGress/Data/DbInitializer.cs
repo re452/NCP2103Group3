@@ -30,10 +30,10 @@ namespace PawGress.Data
             {
                 var tasks = new[]
                 {
-                    new TaskItem { Name = "5 Push-ups", XP = 20, Completed = false, Category = "Upper", IsHabit = false, UserId = 0 },
-                    new TaskItem { Name = "10 Squats", XP = 25, Completed = false, Category = "Lower", IsHabit = false, UserId = 0 },
-                    new TaskItem { Name = "Plank 30s", XP = 15, Completed = false, Category = "Core", IsHabit = false, UserId = 0 },
-                    new TaskItem { Name = "Jog 5 min", XP = 30, Completed = false, Category = "Cardio", IsHabit = false, UserId = 0 }
+                    new TaskItem { Name = "5 Push-ups", XP = 20, IsCompleted = false, Category = "Upper", IsHabit = false, UserId = 0 },
+                    new TaskItem { Name = "10 Squats", XP = 25, IsCompleted = false, Category = "Lower", IsHabit = false, UserId = 0 },
+                    new TaskItem { Name = "Plank 30s", XP = 15, IsCompleted = false, Category = "Core", IsHabit = false, UserId = 0 },
+                    new TaskItem { Name = "Jog 5 min", XP = 30, IsCompleted = false, Category = "Cardio", IsHabit = false, UserId = 0 }
                 };
 
                 context.Tasks.AddRange(tasks);
@@ -84,7 +84,6 @@ namespace PawGress.Data
 
             context.SaveChanges();
 
-            // Mark that the user has received starter pets
             var user = context.Users.Find(userId);
             if (user != null)
             {

@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets/Images/line-chart-placeholder.png"
     },
     {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/logo.png",
+      "PackagePath": "staticwebassets/Images/logo.png"
+    },
+    {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/pie-chart-placeholder.png",
       "PackagePath": "staticwebassets/Images/pie-chart-placeholder.png"
     },

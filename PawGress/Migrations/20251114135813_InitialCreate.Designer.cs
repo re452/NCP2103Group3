@@ -11,7 +11,7 @@ using PawGress.Data;
 namespace PawGress.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251114100836_InitialCreate")]
+    [Migration("20251114135813_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -150,7 +150,14 @@ namespace PawGress.Migrations
                     b.Property<int?>("ChallengeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Completed")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCompleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsHabit")
@@ -162,6 +169,10 @@ namespace PawGress.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("XP")
                         .HasColumnType("INTEGER");
@@ -177,50 +188,65 @@ namespace PawGress.Migrations
                         {
                             Id = 1,
                             Category = "Upper",
-                            Completed = false,
+                            CreatedAt = new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(489),
+                            Description = "",
+                            IsCompleted = false,
                             IsHabit = false,
                             Name = "10 Push-ups",
                             UserId = 0,
+                            UserName = "",
                             XP = 10
                         },
                         new
                         {
                             Id = 2,
                             Category = "Core",
-                            Completed = false,
+                            CreatedAt = new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(493),
+                            Description = "",
+                            IsCompleted = false,
                             IsHabit = false,
                             Name = "20 Sit-ups",
                             UserId = 0,
+                            UserName = "",
                             XP = 15
                         },
                         new
                         {
                             Id = 3,
                             Category = "Lower",
-                            Completed = false,
+                            CreatedAt = new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(495),
+                            Description = "",
+                            IsCompleted = false,
                             IsHabit = false,
                             Name = "15 Squats",
                             UserId = 0,
+                            UserName = "",
                             XP = 10
                         },
                         new
                         {
                             Id = 4,
                             Category = "Core",
-                            Completed = false,
+                            CreatedAt = new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(523),
+                            Description = "",
+                            IsCompleted = false,
                             IsHabit = true,
                             Name = "Drink Water",
                             UserId = 0,
+                            UserName = "",
                             XP = 5
                         },
                         new
                         {
                             Id = 5,
                             Category = "Upper",
-                            Completed = false,
+                            CreatedAt = new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(525),
+                            Description = "",
+                            IsCompleted = false,
                             IsHabit = true,
                             Name = "Stretch",
                             UserId = 0,
+                            UserName = "",
                             XP = 5
                         });
                 });

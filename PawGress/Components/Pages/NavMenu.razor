@@ -3,6 +3,8 @@
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <nav class="navbar">
     <div class="navbar-brand" @onclick="@(() => Navigation.NavigateTo("/dashboard"))">
         <img src="/Images/logo.png" alt="PawGress Logo" class="logo" />
@@ -18,29 +20,38 @@
 
     <div class="navbar-user">
         <span class="username">@CurrentUsername</span>
-        <span class="currency">💎 @UserCurrency</span>
+        <span class="currency">@UserCurrency</span>
         <button class="logout-btn" @onclick="Logout">Logout</button>
     </div>
 </nav>
 
 <style>
-/* Remove default margin/padding and ensure full height */
+/* Remove default margin/padding */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
+    border: 0;
+    box-sizing: border-box;
+    background: #1b102d; /* Make background same as navbar to remove page border */
 }
-/* Navbar container using mostly #36274F */
+
+/* Pixel font for all nav elements */
+.navbar, .nav-links li, .navbar-user, .logout-btn, .navbar-brand span {
+    font-family: 'Press Start 2P', cursive !important;
+}
+
+/* Navbar container */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #36274F; /* main background color */
+    background-color: #1b102d;
     color: #fff;
     padding: 10px 20px;
-    font-family: 'Segoe UI', sans-serif;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 0 #36274f;
+    border: 0; /* remove white border */
 }
 
 /* Brand logo + text */
@@ -68,25 +79,31 @@ html, body {
 .nav-links li {
     cursor: pointer;
     padding: 6px 12px;
-    border-radius: 6px;
-    transition: background-color 0.2s, color 0.2s;
+    border: 2px solid #36274f;
+    background-color: #36274f;
+    transition: background-color 0.2s;
+    box-shadow: 2px 2px 0 #000 inset;
+    position: relative;
+    top: -1px; /* move upward */
 }
 
 .nav-links li:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* subtle hover */
+    background-color: #3ee6c8;
+    color: #1b102d;
 }
 
 .nav-links li.active {
-    background-color: #3ee6c8; /* teal for active page */
-    color: #000;
-    font-weight: bold;
+    background-color: #3ee6c8;
+    color: #1b102d;
 }
 
-/* User info section */
+/* User info */
 .navbar-user {
     display: flex;
     align-items: center;
     gap: 15px;
+    position: relative;
+    top: -1px; /* move upward */
 }
 
 .navbar-user .username {
@@ -94,21 +111,24 @@ html, body {
 }
 
 .navbar-user .currency {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #36274f;
     padding: 4px 8px;
-    border-radius: 5px;
+    border: 2px solid #000;
+    border-radius: 2px;
+    box-shadow: 2px 2px 0 #000 inset;
+    position: relative;
 }
 
-/* Logout button */
+/* Logout button pixel style */
 .logout-btn {
     background-color: #ff4c4c;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
+    border: 2px solid #000;
+    padding: 6px 12px;
+    border-radius: 2px;
     cursor: pointer;
     color: #fff;
     font-weight: bold;
-    transition: background-color 0.2s;
+    box-shadow: 2px 2px 0 #000 inset;
 }
 
 .logout-btn:hover {
@@ -118,15 +138,8 @@ html, body {
 
 @code {
     private string CurrentUsername = "Pawthlete";
-    private int UserCurrency = 1200;
+    private int UserCurrency = 0;
 
-    private string GetActiveClass(string href)
-    {
-        return Navigation.Uri.EndsWith(href) ? "active" : "";
-    }
-
-    private void Logout()
-    {
-        Navigation.NavigateTo("/login");
-    }
+    private string GetActiveClass(string href) => Navigation.Uri.EndsWith(href) ? "active" : "";
+    private void Logout() => Navigation.NavigateTo("/", forceLoad: true);
 }

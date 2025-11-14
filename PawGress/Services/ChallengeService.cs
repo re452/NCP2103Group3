@@ -42,16 +42,16 @@ namespace PawGress.Services
 
             foreach (var task in challenge.Tasks)
             {
-                if (!task.Completed)
+                if (!task.IsCompleted)
                 {
-                    task.Completed = true;
+                    task.IsCompleted = true;
 
                     // Award XP for each task to pet
                     await _petService.AddXPAsync(petId, task.XP);
                 }
             }
 
-            challenge.Completed = true; // optional flag
+            challenge.Completed = true; // optional flag for Challenge itself
             await _context.SaveChangesAsync();
             return true;
         }
@@ -59,7 +59,6 @@ namespace PawGress.Services
         // Add a pre-made or custom challenge
         public async Task<Challenge> AddChallengeAsync(string name, List<int> taskIds, bool isPreMade = false)
         {
-            // Get the tasks selected by user
             var tasks = await _context.Tasks
                 .Where(t => taskIds.Contains(t.Id))
                 .ToListAsync();
@@ -75,6 +74,7 @@ namespace PawGress.Services
             await _context.SaveChangesAsync();
             return challenge;
         }
+
         public async Task<bool> CompleteChallengeForUserAsync(int userId, int challengeId, int petId)
         {
             var userChallenge = await _context.UserChallenges
@@ -100,7 +100,11 @@ namespace PawGress.Services
 
             foreach (var task in challenge.Tasks)
             {
-            // await CompleteTaskForUserAsync(userId, task.Id, petId);
+                if (!task.IsCompleted)
+                {
+                    task.IsCompleted = true;
+                    await _petService.AddXPAsync(petId, task.XP);
+                }
             }
 
             userChallenge.Completed = true;
@@ -109,5 +113,3 @@ namespace PawGress.Services
         }
     }
 }
-
-

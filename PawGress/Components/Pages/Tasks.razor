@@ -1,6 +1,346 @@
 @page "/tasks"
-@inject NavigationManager Navigation
+
+@using PawGress.Models
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode InteractiveServer
+@using PawGress.Services
+@inject TaskService TaskService
+@inject UserService UserService
+@inject NavigationManager Navigation
+
+<!-- Google Fonts: Press Start 2P for pixelated style -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <NavMenu />
+
+<div class="page-background">
+    <div class="tasks-container">
+        <!-- Pet section -->
+        <section class="pet-section">
+            <h2>Your Starter Pet</h2>
+            <div class="pet-card">
+                <img src="/Images/Fluffy.png" class="pet-image" />
+                <div class="pet-info">
+                    <h3>@StarterPetName (Lv @StarterPetLevel)</h3>
+                    <p>HP: @StarterPetHealth%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TASKS TABLE -->
+        <section class="tasks-section">
+            <div class="tasks-header">
+                <h2>Your Tasks</h2>
+                <button class="add-task-btn" @onclick="OpenAddModal">+ Add Task</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="@GetTabClass("active")" @onclick="@(() => CurrentTab = "active")">Active</button>
+                <button class="@GetTabClass("completed")" @onclick="@(() => CurrentTab = "completed")">Completed</button>
+            </div>
+
+            <!-- Task Table -->
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in FilteredTasks)
+                    {
+                        <tr class="@(task.IsCompleted ? "completed-task" : "")">
+                            <td>@task.Name</td>
+                            <td>@task.Description</td>
+                            <td>@task.Category</td>
+                            <td>@(task.IsCompleted ? "✅ Completed" : "⌛ Pending")</td>
+                            <td>
+                                <div class="action-buttons">
+                                    @if (!task.IsCompleted)
+                                    {
+                                        <button class="check-btn" @onclick="@(() => CompleteTask(task))">✔</button>
+                                        <button class="edit-btn" @onclick="@(() => OpenEditModal(task))">✎</button>
+                                    }
+                                    <button class="delete-btn" @onclick="@(() => DeleteTask(task.Id))">🗑</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+<!-- ADD / EDIT TASK MODAL -->
+@if (ShowModal)
+{
+    <div class="modal-backdrop">
+        <div class="modal-box card-modal">
+            <h3>@(EditingTask.Id == 0 ? "Add New Task" : "Edit Task")</h3>
+
+            <input class="input" placeholder="Task Name" @bind="EditingTask.Name" />
+            <textarea class="textarea" placeholder="Description" @bind="EditingTask.Description"></textarea>
+            <input class="input" placeholder="Category" @bind="EditingTask.Category" />
+
+            <div class="modal-actions">
+                <button class="save-btn" @onclick="SaveTask">Save</button>
+                <button class="cancel-btn" @onclick="CloseModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+/* --- Page Background --- */
+.page-background {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/Images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive !important; /* Pixel font applied */
+    display: flex;
+    justify-content: center;
+}
+
+/* --- Tasks Container --- */
+.tasks-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* --- Pet Card Section --- */
+.pet-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.pet-card {
+    display: flex;
+    gap: 20px;
+    background: rgba(27, 16, 45, 0.85);
+    color: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.pet-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- Tasks Table Section --- */
+.tasks-section {
+    flex: 2;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(27, 16, 45, 0.85);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* --- Tasks Header --- */
+.tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Tabs --- */
+.tabs {
+    margin-bottom: 15px;
+}
+
+.tabs button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    margin-right: 5px;
+    cursor: pointer;
+    background: #4F3973;
+    color: #fff;
+}
+
+.active-tab {
+    background: #3ee6c8;
+    color: #1b102d;
+}
+
+/* --- Task Table --- */
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.task-table th {
+    background: rgba(40,30,65,0.9);
+    color: #fff;
+    padding: 12px;
+    text-align: left;
+}
+
+.task-table td {
+    border: 1px solid rgba(40,30,65,0.7);
+    padding: 10px;
+    color: #fff;
+}
+
+.task-table tbody tr:nth-child(even) {
+    background: rgba(27,16,45,0.7);
+}
+
+.task-table tbody tr:nth-child(odd) {
+    background: rgba(27,16,45,0.85);
+}
+
+.task-table tbody tr:hover {
+    background: #3ee6c8;
+    color: #1b102d;
+}
+
+.completed-task {
+    background-color: #3ee6c8 !important;
+    color: #1b102d;
+}
+
+/* --- Buttons --- */
+.action-buttons {
+    display: flex;
+    gap: 5px; /* spacing between all action buttons */
+}
+
+.check-btn { background: #3ee6c8; color: #1b102d; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; }
+.edit-btn { background: #ffc400; color: #1b102d; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; }
+.delete-btn { background: #ff4c4c; color: #fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; }
+.add-task-btn { background: #4A356B; color: #fff; padding: 6px 12px; border-radius:6px; cursor:pointer; }
+
+/* --- Modal Card --- */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-modal {
+    background: rgba(27, 16, 45, 0.95);
+    color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 350px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.input, .textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(40,30,65,0.7);
+    background: rgba(40,30,65,0.85);
+    color: #fff;
+}
+
+.textarea { height: 80px; }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.save-btn { background: #3ee6c8; color: #1b102d; padding:6px 12px; border-radius:6px; }
+.cancel-btn { background: #ff4c4c; color: #fff; padding:6px 12px; border-radius:6px; }
+</style>
+
+@code {
+    private string CurrentUser = "Pawthlete";
+
+    private List<TaskItem> AllTasks = new();
+    private IEnumerable<TaskItem> FilteredTasks =>
+        CurrentTab == "active"
+            ? AllTasks.Where(t => !t.IsCompleted)
+            : AllTasks.Where(t => t.IsCompleted);
+
+    private string CurrentTab = "active";
+    private bool ShowModal = false;
+    private TaskItem EditingTask = new();
+
+    private string StarterPetName = "Fluffy";
+    private int StarterPetLevel = 1;
+    private int StarterPetHealth = 100;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllTasks = await TaskService.GetUserTasksAsync(CurrentUser);
+    }
+
+    private string GetTabClass(string tab) => CurrentTab == tab ? "active-tab" : "";
+
+    private void OpenAddModal()
+    {
+        EditingTask = new TaskItem { UserName = CurrentUser };
+        ShowModal = true;
+    }
+
+    private void OpenEditModal(TaskItem task)
+    {
+        EditingTask = new TaskItem
+        {
+            Id = task.Id,
+            UserName = task.UserName,
+            Name = task.Name,
+            Description = task.Description,
+            IsCompleted = task.IsCompleted
+        };
+        ShowModal = true;
+    }
+
+    private async Task SaveTask()
+    {
+        if (EditingTask.Id == 0)
+            await TaskService.AddTaskAsync(EditingTask);
+        else
+            await TaskService.UpdateTaskAsync(EditingTask);
+
+        AllTasks = await TaskService.GetUserTasksAsync(CurrentUser);
+        CloseModal();
+    }
+
+    private void CloseModal() => ShowModal = false;
+
+    private async Task CompleteTask(TaskItem task)
+    {
+        task.IsCompleted = true;
+        await TaskService.UpdateTaskAsync(task);
+        AllTasks = await TaskService.GetUserTasksAsync(CurrentUser);
+    }
+
+    private async Task DeleteTask(int id)
+    {
+        await TaskService.DeleteTaskAsync(id);
+        AllTasks = await TaskService.GetUserTasksAsync(CurrentUser);
+    }
+}

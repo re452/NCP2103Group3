@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -48,12 +49,15 @@ namespace PawGress.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     XP = table.Column<int>(type: "INTEGER", nullable: false),
                     Category = table.Column<string>(type: "TEXT", nullable: false),
                     IsHabit = table.Column<bool>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Completed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ChallengeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -191,14 +195,14 @@ namespace PawGress.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tasks",
-                columns: new[] { "Id", "Category", "ChallengeId", "Completed", "IsHabit", "Name", "UserId", "XP" },
+                columns: new[] { "Id", "Category", "ChallengeId", "CreatedAt", "Description", "IsCompleted", "IsHabit", "Name", "UserId", "UserName", "XP" },
                 values: new object[,]
                 {
-                    { 1, "Upper", null, false, false, "10 Push-ups", 0, 10 },
-                    { 2, "Core", null, false, false, "20 Sit-ups", 0, 15 },
-                    { 3, "Lower", null, false, false, "15 Squats", 0, 10 },
-                    { 4, "Core", null, false, true, "Drink Water", 0, 5 },
-                    { 5, "Upper", null, false, true, "Stretch", 0, 5 }
+                    { 1, "Upper", null, new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(489), "", false, false, "10 Push-ups", 0, "", 10 },
+                    { 2, "Core", null, new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(493), "", false, false, "20 Sit-ups", 0, "", 15 },
+                    { 3, "Lower", null, new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(495), "", false, false, "15 Squats", 0, "", 10 },
+                    { 4, "Core", null, new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(523), "", false, true, "Drink Water", 0, "", 5 },
+                    { 5, "Upper", null, new DateTime(2025, 11, 14, 13, 58, 13, 327, DateTimeKind.Utc).AddTicks(525), "", false, true, "Stretch", 0, "", 5 }
                 });
 
             migrationBuilder.InsertData(

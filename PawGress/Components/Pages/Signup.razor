@@ -7,11 +7,10 @@
 @inject NavigationManager Navigation
 @inject AppDbContext Db
 
-<link href="app.css" rel="stylesheet" />
-<link href="auth.css" rel="stylesheet" />
+<!-- Pixelated font -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
-<div class="auth-card" style="color:white">
-    <!-- use Blazor onsubmit and prevent the browser default -->
+<div class="auth-card">
     <form @onsubmit="HandleSignup" @onsubmit:preventDefault>
         <h1 class="auth-title">SIGN UP</h1>
 
@@ -23,16 +22,119 @@
             @(isSubmitting ? "Creating account..." : "Sign Up")
         </button>
 
-        <p style="color:white">
-            Already have an account? <a href="/" style="color:#3ee6c8">Login</a>
+        <p class="auth-footer">
+            Already have an account? <a href="/">Login</a>
         </p>
 
         @if (!string.IsNullOrEmpty(message))
         {
-            <p style="color:white">@message</p>
+            <p class="auth-message">@message</p>
         }
     </form>
 </div>
+
+<style>
+    /* --- Global Pixel Font --- */
+    * {
+        font-family: 'Press Start 2P', cursive;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-image: url('/Images/pixel.png');
+        color: #fff;
+    }
+
+    /* --- Auth Card --- */
+    .auth-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    form {
+        background-color: #36274f;
+        padding: 30px 20px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 300px;
+    }
+
+    .auth-title {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #3ee6c8;
+    }
+
+    /* --- Inputs --- */
+    .auth-input {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid #3ee6c8;
+        border-radius: 6px;
+        background-color: #4f3973;
+        color: #fff;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    .auth-input::placeholder {
+        color: #bbb;
+    }
+
+    /* --- Button --- */
+    .auth-button {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 6px;
+        background-color: #3ee6c8;
+        color: #000;
+        cursor: pointer;
+        font-family: 'Press Start 2P', cursive;
+        transition: background 0.2s;
+    }
+
+    .auth-button:disabled {
+        background-color: #7fc9bf;
+        cursor: not-allowed;
+    }
+
+    .auth-button:hover:not(:disabled) {
+        background-color: #36cbb0;
+    }
+
+    /* --- Footer & links --- */
+    .auth-footer {
+        font-size: 0.6rem;
+        text-align: center;
+    }
+
+    .auth-footer a {
+        color: #3ee6c8;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Message text --- */
+    .auth-message {
+        font-size: 0.6rem;
+        text-align: center;
+        color: #ff4c4c;
+    }
+</style>
 
 @code {
     private User signupUser = new();
@@ -48,7 +150,6 @@
             message = string.Empty;
             StateHasChanged();
 
-            // Basic validation
             if (string.IsNullOrWhiteSpace(signupUser.Username) ||
                 string.IsNullOrWhiteSpace(signupUser.Password) ||
                 string.IsNullOrWhiteSpace(confirmPassword))
@@ -58,7 +159,6 @@
                 return;
             }
 
-            // Password confirmation check
             if (signupUser.Password != confirmPassword)
             {
                 message = "⚠️ Passwords do not match.";
@@ -66,7 +166,6 @@
                 return;
             }
 
-            // Check duplicate username
             var existing = await Db.Users.FirstOrDefaultAsync(u => u.Username == signupUser.Username);
             if (existing != null)
             {
@@ -75,16 +174,13 @@
                 return;
             }
 
-            // Save user
             Db.Users.Add(signupUser);
             await Db.SaveChangesAsync();
 
             message = $"✅ Account created for: {signupUser.Username}";
             StateHasChanged();
-
             await Task.Delay(800);
 
-            // Redirect to login
             Navigation.NavigateTo("/", forceLoad: true);
         }
         catch (Exception ex)

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yHcfM1pLy/8zeKyYUth2jN7Ve3wSlKxGYhRhi9NJQ50=",
+  "Hash": "H/7rwWEnpUXCjDgFpkBtPGZBvzAzxnJW588/duQnG1g=",
   "Source": "PawGress",
   "BasePath": "_content/PawGress",
   "Mode": "Default",
@@ -167,6 +167,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/Images/line-chart-placeholder.png"
+    },
+    {
+      "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/logo.png",
+      "SourceId": "PawGress",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/NCP2103Group3/PawGress/wwwroot/",
+      "BasePath": "_content/PawGress",
+      "RelativePath": "Images/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/logo.png"
     },
     {
       "Identity": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/pie-chart-placeholder.png",
