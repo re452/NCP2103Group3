@@ -26,6 +26,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/Challenges.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9DaGFsbGVuZ2VzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/NCP2103Group3/PawGress/Components/Pages/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9EYXNoYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,8 +38,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Mb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9OYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/NCP2103Group3/PawGress/Components/Pages/Signup.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9TaWdudXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/Store.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9TdG9yZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/Tasks.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9UYXNrcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/workspaces/NCP2103Group3/PawGress/_Imports.razor]

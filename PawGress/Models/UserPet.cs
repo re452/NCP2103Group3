@@ -9,5 +9,8 @@ namespace PawGress.Models
 
         public int PetId { get; set; }
         public Pet Pet { get; set; } = null!;
+
+        public int Level { get; set; } = 1;
+        public int XP { get; set; } = 0;
     }
 }

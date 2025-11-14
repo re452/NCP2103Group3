@@ -53,11 +53,16 @@ namespace PawGress.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Health")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Level")
                         .HasColumnType("INTEGER");
@@ -70,14 +75,15 @@ namespace PawGress.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("XP")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pets");
 
@@ -85,45 +91,45 @@ namespace PawGress.Migrations
                         new
                         {
                             Id = 1,
-                            Age = 0,
+                            Description = "",
                             Health = 100,
+                            ImageUrl = "/Images/placeholder.png",
                             Level = 1,
                             Name = "Fluffy",
                             Rarity = "Standard",
-                            Type = "",
                             XP = 0
                         },
                         new
                         {
                             Id = 2,
-                            Age = 0,
+                            Description = "",
                             Health = 100,
+                            ImageUrl = "/Images/placeholder.png",
                             Level = 1,
                             Name = "Sparky",
                             Rarity = "Standard",
-                            Type = "",
                             XP = 0
                         },
                         new
                         {
                             Id = 3,
-                            Age = 0,
+                            Description = "",
                             Health = 100,
+                            ImageUrl = "/Images/placeholder.png",
                             Level = 1,
                             Name = "Shadow",
                             Rarity = "Rare",
-                            Type = "",
                             XP = 0
                         },
                         new
                         {
                             Id = 4,
-                            Age = 0,
+                            Description = "",
                             Health = 100,
+                            ImageUrl = "/Images/placeholder.png",
                             Level = 1,
                             Name = "Aurora",
                             Rarity = "Mythical",
-                            Type = "",
                             XP = 0
                         });
                 });
@@ -222,6 +228,9 @@ namespace PawGress.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("HasSelectedStarterPet")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -238,6 +247,7 @@ namespace PawGress.Migrations
                         new
                         {
                             Id = 1,
+                            HasSelectedStarterPet = false,
                             Password = "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=",
                             Username = "testuser"
                         });
@@ -273,10 +283,16 @@ namespace PawGress.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PetId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("XP")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -310,6 +326,15 @@ namespace PawGress.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserTasks");
+                });
+
+            modelBuilder.Entity("PawGress.Models.Pet", b =>
+                {
+                    b.HasOne("PawGress.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PawGress.Models.TaskItem", b =>

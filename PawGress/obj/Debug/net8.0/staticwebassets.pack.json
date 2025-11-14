@@ -5,6 +5,34 @@
       "PackagePath": "staticwebassets/Images/Background.png"
     },
     {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Barky.png",
+      "PackagePath": "staticwebassets/Images/Barky.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/CatGuide.png",
+      "PackagePath": "staticwebassets/Images/CatGuide.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Chirpy.png",
+      "PackagePath": "staticwebassets/Images/Chirpy.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Fluffy.png",
+      "PackagePath": "staticwebassets/Images/Fluffy.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/Scaly.png",
+      "PackagePath": "staticwebassets/Images/Scaly.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/line-chart-placeholder.png",
+      "PackagePath": "staticwebassets/Images/line-chart-placeholder.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/pie-chart-placeholder.png",
+      "PackagePath": "staticwebassets/Images/pie-chart-placeholder.png"
+    },
+    {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",
       "PackagePath": "staticwebassets/app.css"
     },

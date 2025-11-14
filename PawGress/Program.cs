@@ -17,6 +17,7 @@ builder.Services.AddScoped<PetService>();
 builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<ChallengeService>();
 
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

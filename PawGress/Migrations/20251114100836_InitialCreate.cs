@@ -28,32 +28,14 @@ namespace PawGress.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Rarity = table.Column<string>(type: "TEXT", nullable: false),
-                    Health = table.Column<int>(type: "INTEGER", nullable: false),
-                    XP = table.Column<int>(type: "INTEGER", nullable: false),
-                    Level = table.Column<int>(type: "INTEGER", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Username = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false)
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    HasSelectedStarterPet = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,6 +67,31 @@ namespace PawGress.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Rarity = table.Column<string>(type: "TEXT", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    XP = table.Column<int>(type: "INTEGER", nullable: false),
+                    Health = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserChallenges",
                 columns: table => new
                 {
@@ -105,32 +112,6 @@ namespace PawGress.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserChallenges_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserPets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PetId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserPets_Pets_PetId",
-                        column: x => x.PetId,
-                        principalTable: "Pets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserPets_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -164,6 +145,34 @@ namespace PawGress.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserPets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PetId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Level = table.Column<int>(type: "INTEGER", nullable: false),
+                    XP = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPets_Pets_PetId",
+                        column: x => x.PetId,
+                        principalTable: "Pets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserPets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Challenges",
                 columns: new[] { "Id", "Completed", "IsPreMade", "Name" },
@@ -171,13 +180,13 @@ namespace PawGress.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pets",
-                columns: new[] { "Id", "Age", "Health", "Level", "Name", "Rarity", "Type", "XP" },
+                columns: new[] { "Id", "Description", "Health", "ImageUrl", "Level", "Name", "Rarity", "UserId", "XP" },
                 values: new object[,]
                 {
-                    { 1, 0, 100, 1, "Fluffy", "Standard", "", 0 },
-                    { 2, 0, 100, 1, "Sparky", "Standard", "", 0 },
-                    { 3, 0, 100, 1, "Shadow", "Rare", "", 0 },
-                    { 4, 0, 100, 1, "Aurora", "Mythical", "", 0 }
+                    { 1, "", 100, "/Images/placeholder.png", 1, "Fluffy", "Standard", null, 0 },
+                    { 2, "", 100, "/Images/placeholder.png", 1, "Sparky", "Standard", null, 0 },
+                    { 3, "", 100, "/Images/placeholder.png", 1, "Shadow", "Rare", null, 0 },
+                    { 4, "", 100, "/Images/placeholder.png", 1, "Aurora", "Mythical", null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -194,8 +203,13 @@ namespace PawGress.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Password", "Username" },
-                values: new object[] { 1, "password", "testuser" });
+                columns: new[] { "Id", "HasSelectedStarterPet", "Password", "Username" },
+                values: new object[] { 1, false, "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=", "testuser" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_UserId",
+                table: "Pets",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ChallengeId",

@@ -15,10 +15,10 @@ namespace PawGress.Data
             {
                 var pets = new[]
                 {
-                    new Pet { Name = "Fluffy", Type = "Cat", Age = 1, Level = 1, XP = 0, Health = 100, Rarity = "Common" },
-                    new Pet { Name = "Barky", Type = "Dog", Age = 1, Level = 1, XP = 0, Health = 100, Rarity = "Common" },
-                    new Pet { Name = "Chirpy", Type = "Bird", Age = 1, Level = 1, XP = 0, Health = 100, Rarity = "Uncommon" },
-                    new Pet { Name = "Scaly", Type = "Lizard", Age = 1, Level = 1, XP = 0, Health = 100, Rarity = "Rare" }
+                    new Pet { Name = "Fluffy", ImageUrl = "/Images/Fluffy.png", Rarity = "Standard" },
+                    new Pet { Name = "Barky", ImageUrl = "/Images/Barky.png", Rarity = "Standard" },
+                    new Pet { Name = "Chirpy", ImageUrl = "/Images/Chirpy.png", Rarity = "Standard" },
+                    new Pet { Name = "Scaly", ImageUrl = "/Images/Scaly.png", Rarity = "Standard" }
                 };
 
                 context.Pets.AddRange(pets);
@@ -62,6 +62,33 @@ namespace PawGress.Data
                 };
 
                 context.Challenges.AddRange(challenge1, challenge2);
+                context.SaveChanges();
+            }
+        }
+
+        // --- Auto-assign starter pets to a user ---
+        public static void AssignStarterPetsToUser(AppDbContext context, int userId)
+        {
+            var pets = context.Pets.Take(4).ToList(); // Always assign the first 4 pets
+            foreach (var pet in pets)
+            {
+                if (!context.UserPets.Any(up => up.UserId == userId && up.PetId == pet.Id))
+                {
+                    context.UserPets.Add(new UserPet
+                    {
+                        UserId = userId,
+                        PetId = pet.Id
+                    });
+                }
+            }
+
+            context.SaveChanges();
+
+            // Mark that the user has received starter pets
+            var user = context.Users.Find(userId);
+            if (user != null)
+            {
+                user.HasSelectedStarterPet = true;
                 context.SaveChanges();
             }
         }

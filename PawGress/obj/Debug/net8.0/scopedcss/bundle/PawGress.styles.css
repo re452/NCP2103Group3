@@ -1,0 +1,100 @@
+/* _content/PawGress/Components/Pages/Dashboard.razor.rz.scp.css */
+.dashboard-container[b-fhqq8k4rpg] {
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    padding: 20px;
+    background: linear-gradient(180deg, #4b367c, #6d4dcf);
+}
+
+/* Section 1 */
+.section1 h1[b-fhqq8k4rpg] {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.section1 p[b-fhqq8k4rpg] {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.popular-pet-card[b-fhqq8k4rpg] {
+    display: flex;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    align-items: center;
+}
+
+.pet-image[b-fhqq8k4rpg] {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.pet-info h2[b-fhqq8k4rpg] {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.pet-description[b-fhqq8k4rpg] {
+    font-size: 0.9rem;
+    margin: 10px 0;
+}
+
+.pet-stats[b-fhqq8k4rpg] {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.stat-bar[b-fhqq8k4rpg] {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bar[b-fhqq8k4rpg] {
+    width: 100px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.fill[b-fhqq8k4rpg] {
+    height: 100%;
+    background-color: #3ee6c8;
+}
+
+/* Your Pets button */
+.your-pets-btn[b-fhqq8k4rpg] {
+    background-color: #3ee6c8;
+    color: #000;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Section 2 */
+.section2[b-fhqq8k4rpg] {
+    margin-top: 40px;
+}
+
+.graphs[b-fhqq8k4rpg] {
+    display: flex;
+    gap: 20px;
+}
+
+.line-graph[b-fhqq8k4rpg], .pie-chart[b-fhqq8k4rpg] {
+    width: 300px;
+    height: 200px;
+}
+
+.inspiration[b-fhqq8k4rpg] {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}

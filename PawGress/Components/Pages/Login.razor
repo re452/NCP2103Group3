@@ -4,7 +4,9 @@
 @using Microsoft.EntityFrameworkCore
 @using PawGress.Data
 @using PawGress.Models
-@inject AppDbContext Db
+@using PawGress.Services
+@inject UserService UserService
+@inject PetService PetService
 @inject NavigationManager Navigation
 
 <link href="app.css" rel="stylesheet" />
@@ -46,43 +48,30 @@
             StateHasChanged();
 
             // 1️⃣ Empty field check
-            if (string.IsNullOrWhiteSpace(loginUser.Username) &&
+            if (string.IsNullOrWhiteSpace(loginUser.Username) ||
                 string.IsNullOrWhiteSpace(loginUser.Password))
             {
-                message = "⚠️ Please enter your username and password.";
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(loginUser.Username))
-            {
-                message = "⚠️ Username is required.";
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(loginUser.Password))
-            {
-                message = "⚠️ Password is required.";
+                message = "⚠️ Please enter both username and password.";
                 return;
             }
 
-            // 2️⃣ Username check
-            var existingUser = await Db.Users.FirstOrDefaultAsync(u => u.Username == loginUser.Username);
+            // 2️⃣ Authenticate user
+            var existingUser = await UserService.AuthenticateAsync(loginUser.Username, loginUser.Password);
             if (existingUser == null)
             {
-                message = "❌ Username not found.";
+                message = "❌ Invalid username or password.";
                 return;
             }
 
-            // 3️⃣ Password check
-            if (existingUser.Password != loginUser.Password)
-            {
-                message = "❌ Incorrect password.";
-                return;
-            }
+            // 3️⃣ Ensure user has starter pets (handled automatically in PetService)
+            var pets = await PetService.GetUserPetsAsync(existingUser.Id);
 
             // 4️⃣ Success
             message = $"✅ Welcome back, {existingUser.Username}!";
             StateHasChanged();
-
             await Task.Delay(800);
+
+            // Redirect to "Your Pets" page
             Navigation.NavigateTo("/dashboard", forceLoad: true);
         }
         catch (Exception ex)

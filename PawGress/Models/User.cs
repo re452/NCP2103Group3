@@ -15,5 +15,8 @@ namespace PawGress.Models
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; } = string.Empty;
+
+        // 👇 NEW: Track if user picked a starter pet
+        public bool HasSelectedStarterPet { get; set; } = false;
     }
 }

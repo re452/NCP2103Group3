@@ -6,84 +6,82 @@ namespace PawGress.Services
 {
     public class PetService
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _db;
 
-        public PetService(AppDbContext context)
+        public PetService(AppDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // Get all pets
         public async Task<List<Pet>> GetAllPetsAsync()
         {
-            return await _context.Pets.ToListAsync();
+            return await _db.Pets.ToListAsync();
         }
 
-        // Get pet by ID
-        public async Task<Pet?> GetPetByIdAsync(int id)
-        {
-            return await _context.Pets.FindAsync(id);
-        }
-
-        // Update XP and level
-        public async Task<bool> AddXPAsync(int petId, int xp)
-        {
-            var pet = await _context.Pets.FindAsync(petId);
-            if (pet == null) return false;
-
-            pet.XP += xp;
-
-            while (pet.XP >= XPForNextLevel(pet.Level))
-            {
-                pet.XP -= XPForNextLevel(pet.Level);
-                pet.Level++;
-            }
-
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        private int XPForNextLevel(int currentLevel)
-        {
-            return currentLevel * 100; // simple example
-        }
-
-        // Update other pet stats if needed (like health)
-        public async Task<bool> UpdatePetAsync(Pet pet)
-        {
-            var existing = await _context.Pets.FindAsync(pet.Id);
-            if (existing == null) return false;
-
-            existing.XP = pet.XP;
-            existing.Level = pet.Level;
-            existing.Health = pet.Health; // if you add Health later
-
-            await _context.SaveChangesAsync();
-            return true;
-        }
+        // Get user's pets, automatically assign starter pets if none exist
         public async Task<List<Pet>> GetUserPetsAsync(int userId)
         {
-            return await _context.UserPets
+            var userPets = await _db.UserPets
                 .Where(up => up.UserId == userId)
                 .Include(up => up.Pet)
                 .Select(up => up.Pet)
                 .ToListAsync();
+
+            if (!userPets.Any())
+            {
+                // Automatically assign first 4 pets as starter pets
+                var starterPets = await _db.Pets.Take(4).ToListAsync();
+                foreach (var pet in starterPets)
+                {
+                    _db.UserPets.Add(new UserPet
+                    {
+                        UserId = userId,
+                        PetId = pet.Id,
+                        Level = 1,
+                        XP = 0
+                    });
+                }
+                await _db.SaveChangesAsync();
+
+                // Reload the user's pets after assignment
+                userPets = await _db.UserPets
+                    .Where(up => up.UserId == userId)
+                    .Include(up => up.Pet)
+                    .Select(up => up.Pet)
+                    .ToListAsync();
+            }
+
+            return userPets;
         }
 
-        // Assign a starter pet to a user (max 4)
-        public async Task<bool> AssignStarterPetToUserAsync(int userId, int petId)
+        // Add XP to a user's pet
+        public async Task<bool> AddXPAsync(int userPetId, int xp)
         {
-            var existingCount = await _context.UserPets.CountAsync(up => up.UserId == userId);
-            if (existingCount >= 4)
-                return false; // user already has 4 pets
+            var userPet = await _db.UserPets.Include(up => up.Pet).FirstOrDefaultAsync(up => up.Id == userPetId);
+            if (userPet == null) return false;
 
-            _context.UserPets.Add(new UserPet
+            userPet.XP += xp;
+
+            while (userPet.XP >= XPForNextLevel(userPet.Level))
             {
-                UserId = userId,
-                PetId = petId
-            });
-            await _context.SaveChangesAsync();
+                userPet.XP -= XPForNextLevel(userPet.Level);
+                userPet.Level++;
+            }
+
+            await _db.SaveChangesAsync();
             return true;
+        }
+
+        private int XPForNextLevel(int level)
+        {
+            return level * 100; // Simple leveling formula
+        }
+
+        // Get pet by ID
+        public async Task<Pet?> GetPetByIdAsync(int petId)
+        {
+            return await _db.Pets.FindAsync(petId);
         }
     }
 }
