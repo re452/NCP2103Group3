@@ -1,6 +1,345 @@
 @page "/challenges"
-@inject NavigationManager Navigation
+
+@using PawGress.Models
+@using PawGress.Services
+@using PawGress.Components
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode InteractiveServer
 
+@inject ChallengeService ChallengeService
+@inject TaskService TaskService
+@inject NavigationManager Navigation
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start2P&display=swap" rel="stylesheet" />
+
 <NavMenu />
+
+<div class="page-background">
+    <div class="challenges-page-container">
+        <aside class="sidebar-filters">
+            <div class="selection-status">
+                TASKS SELECTED: **@SelectedChallengeCount**
+            </div>
+            
+            @if (SelectedChallengeCount > 0)
+            {
+                <button class="add-selected-btn" @onclick="AddSelectedChallenges">
+                    + ADD @SelectedChallengeCount TASKS
+                </button>
+            }
+            
+            <div class="filter-group">
+                <h3>ALL</h3>
+                <button class="@GetFilterClass("ALL")" @onclick="@(() => FilterByCategory("ALL"))">All Exercises</button>
+            </div>
+
+            <div class="filter-group">
+                <h3>UPPER BODY</h3>
+                <button class="@GetFilterClass("UPPER BODY")" @onclick="@(() => FilterByCategory("UPPER BODY"))">Arms</button>
+                <button class="@GetFilterClass("CHEST")" @onclick="@(() => FilterByCategory("CHEST"))">Chest</button>
+                <button class="@GetFilterClass("SHOULDERS")" @onclick="@(() => FilterByCategory("SHOULDERS"))">Shoulders</button>
+                <button class="@GetFilterClass("BACK")" @onclick="@(() => FilterByCategory("BACK"))">Back</button>
+                <button class="@GetFilterClass("CORE")" @onclick="@(() => FilterByCategory("CORE"))">Core</button>
+            </div>
+
+            <div class="filter-group">
+                <h3>LOWER BODY</h3>
+                <button class="@GetFilterClass("QUADS")" @onclick="@(() => FilterByCategory("QUADS"))">Quads</button>
+                <button class="@GetFilterClass("GLUTES")" @onclick="@(() => FilterByCategory("GLUTES"))">Glutes</button>
+                <button class="@GetFilterClass("CALVES")" @onclick="@(() => FilterByCategory("CALVES"))">Calves</button>
+                <button class="@GetFilterClass("HAMSTRING")" @onclick="@(() => FilterByCategory("HAMSTRING"))">Hamstring</button>
+            </div>
+
+            <div class="filter-group">
+                <h3>CARDIO</h3>
+                <button class="@GetFilterClass("CARDIO")" @onclick="@(() => FilterByCategory("CARDIO"))">Cycling</button>
+                <button class="@GetFilterClass("CARDIO")" @onclick="@(() => FilterByCategory("CARDIO"))">Dancing</button>
+                <button class="@GetFilterClass("CARDIO")" @onclick="@(() => FilterByCategory("CARDIO"))">Running</button>
+                <button class="@GetFilterClass("CARDIO")" @onclick="@(() => FilterByCategory("CARDIO"))">Other</button>
+            </div>
+        </aside>
+
+        <main class="challenge-grid-main">
+            @if (FilteredChallenges == null)
+            {
+                <p>Loading Challenges...</p>
+            }
+            else if (!FilteredChallenges.Any())
+            {
+                <p>No challenges found for this category.</p>
+            }
+            else
+            {
+                <div class="challenge-grid">
+                    @foreach (var challenge in FilteredChallenges)
+                    {
+                        <ChallengeCard 
+                            Challenge="challenge" 
+                            OnSelectionChanged="HandleChallengeSelection"
+                            OnDifficultyChanged="HandleChallengeDifficultyChange"
+                        />
+                    }
+                </div>
+            }
+        </main>
+    </div>
+</div>
+
+<style>
+    .page-background {
+        min-height: 100vh;
+        width: 100%;
+        background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/Images/Background.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 20px;
+        box-sizing: border-box;
+        color: #fff;
+        font-family: 'Press Start 2P', cursive;
+        display: flex;
+        justify-content: center;
+    }
+
+    .challenges-page-container {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        width: 100%;
+        margin-top: 50px;
+        background-color: rgba(27, 16, 45, 0.85);
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    /* --- Sidebar Filters --- */
+    .sidebar-filters {
+        flex: 0 0 250px;
+        padding-right: 20px;
+        border-right: 2px solid #36274f;
+    }
+
+    .selection-status {
+        margin-bottom: 25px;
+        font-size: 0.8rem;
+        color: #3ee6c8;
+    }
+    
+    .add-selected-btn {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: #3ee6c8;
+        color: #1b102d;
+        border: 2px solid #000;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.8rem;
+        box-shadow: 3px 3px 0 #000;
+        transition: background-color 0.2s;
+    }
+
+    .add-selected-btn:hover {
+        background-color: #2acbaf;
+    }
+
+
+    .filter-group {
+        margin-bottom: 20px;
+    }
+
+    .filter-group h3 {
+        font-size: 1.0rem;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .sidebar-filters button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 6px 10px;
+        margin-bottom: 4px;
+        background: transparent;
+        color: #ccc;
+        border: none;
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    .sidebar-filters button:hover {
+        background-color: #36274f;
+    }
+
+    .sidebar-filters button.active-filter {
+        background-color: #3ee6c8;
+        color: #1b102d;
+        font-weight: bold;
+    }
+    
+    /* --- Challenge Grid --- */
+    .challenge-grid-main {
+        flex: 1;
+    }
+
+    .challenge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    /* --- Challenge Card Styles (from ChallengeCard.razor) --- */
+    .challenge-card {
+        background-color: #36274f;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 4px 4px 0 #1b102d;
+        border: 2px solid #4F3973;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .challenge-card:hover {
+        box-shadow: 6px 6px 0 #1b102d;
+        transform: translate(-2px, -2px);
+    }
+    
+    .challenge-card.selected {
+        border-color: #3ee6c8;
+        box-shadow: 0 0 15px #3ee6c8;
+    }
+
+    .card-image-container {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .exercise-image {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        background: #4F3973;
+        border-radius: 8px;
+    }
+
+    .select-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        background-color: #3ee6c8;
+        color: #1b102d;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .challenge-name {
+        font-size: 1.1rem;
+        margin: 5px 0 10px 0;
+        color: #3ee6c8;
+    }
+
+    .difficulty-group {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+    }
+
+    .difficulty-group span {
+        margin: 0 2px;
+        cursor: pointer;
+        color: #ccc;
+    }
+    
+    .difficulty-label {
+        color: #fff;
+    }
+
+    .selected-difficulty {
+        color: #ff4c4c;
+        font-weight: bold;
+    }
+
+    .muscle-group {
+        font-size: 0.7rem;
+        margin: 5px 0;
+    }
+
+    .muscle-group .label {
+        color: #3ee6c8;
+    }
+</style>
+
+@code {
+    private List<Challenge> AllChallenges = new();
+    private IEnumerable<Challenge> FilteredChallenges = new List<Challenge>();
+    private string CurrentFilter = "ALL";
+    private string CurrentUser = "Pawthlete";
+    private int SelectedChallengeCount => AllChallenges.Count(c => c.IsSelected);
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllChallenges = await ChallengeService.GetAllChallengesAsync();
+        FilteredChallenges = AllChallenges;
+    }
+
+    private void FilterByCategory(string filter)
+    {
+        CurrentFilter = filter;
+        
+        if (filter == "ALL")
+        {
+            FilteredChallenges = AllChallenges;
+        }
+        else if (new[] { "UPPER BODY", "LOWER BODY", "CARDIO" }.Contains(filter))
+        {
+            // Filter by primary CATEGORY
+            FilteredChallenges = AllChallenges.Where(c => c.Category == filter).ToList();
+        }
+        else 
+        {
+            // Filter by sub-muscle group (MainMuscle or SecondaryMuscles)
+            FilteredChallenges = AllChallenges.Where(c => 
+                c.MainMuscle.Contains(filter) || 
+                c.SecondaryMuscles.Contains(filter)
+            ).ToList();
+        }
+    }
+
+    private string GetFilterClass(string filter) => CurrentFilter == filter ? "active-filter" : "";
+
+    private async Task HandleChallengeSelection(Challenge challenge)
+    {
+        StateHasChanged();
+        await Task.CompletedTask;
+    }
+    
+    private Task HandleChallengeDifficultyChange(Challenge challenge)
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private async Task AddSelectedChallenges()
+    {
+        var selected = AllChallenges.Where(c => c.IsSelected).ToList();
+
+        foreach (var challenge in selected)
+        {
+            await ChallengeService.AddChallengeToTasksAsync(challenge.Id, CurrentUser);
+            challenge.IsSelected = false; 
+        }
+
+        Navigation.NavigateTo("/tasks", forceLoad: true);
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,50 @@
+@using PawGress.Models
+
+<div class="challenge-card @(Challenge.IsSelected ? "selected" : "")">
+    <div class="card-image-container">
+        <img src="@Challenge.ImagePath" alt="@Challenge.Name" class="exercise-image" />
+        <button class="select-btn" @onclick="ToggleSelection">
+            @(Challenge.IsSelected ? "-" : "+")
+        </button>
+    </div>
+
+    <h3 class="challenge-name">@Challenge.Name</h3>
+
+    <div class="difficulty-group">
+        <span class="difficulty-label">DIFFICULTY:</span>
+        <span class="@(Challenge.Difficulty == "EASY" ? "selected-difficulty" : "")" @onclick="@(() => SetDifficulty("EASY"))">EASY</span> /
+        <span class="@(Challenge.Difficulty == "MEDIUM" ? "selected-difficulty" : "")" @onclick="@(() => SetDifficulty("MEDIUM"))">MEDIUM</span> /
+        <span class="@(Challenge.Difficulty == "HARD" ? "selected-difficulty" : "")" @onclick="@(() => SetDifficulty("HARD"))">HARD</span>
+    </div>
+
+    <div class="muscle-group">
+        <span class="label">MAIN MUSCLE:</span> @Challenge.MainMuscle
+    </div>
+    <div class="muscle-group">
+        <span class="label">SECONDARY MUSCLES:</span> @Challenge.SecondaryMuscles
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Challenge Challenge { get; set; } = new Challenge();
+
+    [Parameter]
+    public EventCallback<Challenge> OnSelectionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<Challenge> OnDifficultyChanged { get; set; }
+
+
+    private async Task ToggleSelection()
+    {
+        Challenge.IsSelected = !Challenge.IsSelected;
+        await OnSelectionChanged.InvokeAsync(Challenge);
+    }
+    
+    private async Task SetDifficulty(string difficulty)
+    {
+        Challenge.Difficulty = difficulty;
+        await OnDifficultyChanged.InvokeAsync(Challenge);
+    }
+}

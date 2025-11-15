@@ -25,6 +25,38 @@
       "PackagePath": "staticwebassets/Images/Scaly.png"
     },
     {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_bicyclecrunch.png",
+      "PackagePath": "staticwebassets/Images/challenge_bicyclecrunch.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_lateralraise.png",
+      "PackagePath": "staticwebassets/Images/challenge_lateralraise.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_legextension.png",
+      "PackagePath": "staticwebassets/Images/challenge_legextension.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_pushup.png",
+      "PackagePath": "staticwebassets/Images/challenge_pushup.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_running.png",
+      "PackagePath": "staticwebassets/Images/challenge_running.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_squat.png",
+      "PackagePath": "staticwebassets/Images/challenge_squat.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/challenge_weighted_squat.png",
+      "PackagePath": "staticwebassets/Images/challenge_weighted_squat.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/exercise_placeholder.png",
+      "PackagePath": "staticwebassets/Images/exercise_placeholder.png"
+    },
+    {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/line-chart-placeholder.png",
       "PackagePath": "staticwebassets/Images/line-chart-placeholder.png"
     },
@@ -35,6 +67,10 @@
     {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/pie-chart-placeholder.png",
       "PackagePath": "staticwebassets/Images/pie-chart-placeholder.png"
+    },
+    {
+      "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/Images/pixel.png",
+      "PackagePath": "staticwebassets/Images/pixel.png"
     },
     {
       "Id": "/workspaces/NCP2103Group3/PawGress/wwwroot/app.css",

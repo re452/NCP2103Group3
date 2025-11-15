@@ -1,23 +1,22 @@
+// Models/Challenge.cs
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace PawGress.Models
 {
     public class Challenge
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; } = string.Empty;
-
-        // True if pre-made by devs, false if user-created
-        public bool IsPreMade { get; set; } = true;
-
-        // Navigation property for tasks in this challenge
-        public List<TaskItem> Tasks { get; set; } = new();
-
-        // Optional: track if challenge has been completed by a user
-        public bool Completed { get; set; } = false;
+        public string ImagePath { get; set; } = string.Empty; // e.g., /Images/challenge1.png
+        public string Category { get; set; } = string.Empty; // e.g., "UPPER BODY"
+        public string Difficulty { get; set; } = "MEDIUM"; // "EASY", "MEDIUM", "HARD"
+        public string MainMuscle { get; set; } = string.Empty;
+        public string SecondaryMuscles { get; set; } = string.Empty;
+        public bool IsSelected { get; set; } = false; // For the 'TASKS SELECTED' counter
+        
+        // --- MISSING PROPERTIES ADDED TO FIX BUILD ERRORS ---
+        public bool IsPreMade { get; set; } = true; // Indicates if it's a static challenge
+        public bool Completed { get; set; } = false; // Indicates if the user completed the whole challenge
+        public ICollection<TaskItem> Tasks { get; set; } = new List<TaskItem>(); // A challenge may contain multiple tasks
     }
 }

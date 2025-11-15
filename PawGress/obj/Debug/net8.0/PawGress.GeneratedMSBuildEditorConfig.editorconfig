@@ -26,6 +26,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/workspaces/NCP2103Group3/PawGress/Components/Pages/ChallengeCard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9DaGFsbGVuZ2VDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/workspaces/NCP2103Group3/PawGress/Components/Pages/Challenges.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9DaGFsbGVuZ2VzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

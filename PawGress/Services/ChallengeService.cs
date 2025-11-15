@@ -1,115 +1,112 @@
-using Microsoft.EntityFrameworkCore;
-using PawGress.Data;
+// Services/ChallengeService.cs
 using PawGress.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PawGress.Services
 {
     public class ChallengeService
     {
-        private readonly AppDbContext _context;
-        private readonly PetService _petService;
+        private readonly TaskService _taskService;
 
-        public ChallengeService(AppDbContext context, PetService petService)
+        public ChallengeService(TaskService taskService)
         {
-            _context = context;
-            _petService = petService;
+            _taskService = taskService;
         }
 
-        // Get all challenges
-        public async Task<List<Challenge>> GetAllChallengesAsync()
+        private static TaskItem CreateTask(string name, string description, string category) =>
+            new TaskItem { Name = name, Description = description, Category = category, UserName = "System" };
+
+        private readonly List<Challenge> _challenges = new List<Challenge>
         {
-            return await _context.Challenges
-                .Include(c => c.Tasks)
-                .ToListAsync();
-        }
+            new Challenge 
+            { 
+                Id = 1, 
+                Name = "Diamond Push-Ups Challenge", 
+                ImagePath = "/Images/challenge_pushup.png", 
+                Category = "UPPER BODY", 
+                Difficulty = "HARD", 
+                MainMuscle = "CHEST", 
+                SecondaryMuscles = "TRICEPS, SHOULDERS",
+                Tasks = new List<TaskItem> { CreateTask("3 Sets of 10 Diamond Push-Ups", "Focus on form and slow negatives.", "Endurance") }
+            },
+            new Challenge 
+            { 
+                Id = 2, 
+                Name = "Bulgarian Split Squat Challenge", 
+                ImagePath = "/Images/challenge_squat.png", 
+                Category = "LOWER BODY", 
+                Difficulty = "MEDIUM", 
+                MainMuscle = "QUADS", 
+                SecondaryMuscles = "GLUTES, CORE",
+                Tasks = new List<TaskItem> { CreateTask("3 Sets of 8/leg Bulgarian Split Squat", "Hold a dumbbell for extra challenge.", "Strength") }
+            },
+            new Challenge 
+            { 
+                Id = 3, 
+                Name = "Lateral Raise Challenge", 
+                ImagePath = "/Images/challenge_lateralraise.png", 
+                Category = "UPPER BODY", 
+                Difficulty = "HARD", 
+                MainMuscle = "BACK", 
+                SecondaryMuscles = "BICEPS, CORE, SHOULDERS",
+                Tasks = new List<TaskItem> { CreateTask("5 Sets of 12 Lateral Raise", "Superset with Bicep Curls.", "Volume") }
+            },
+            new Challenge 
+            { 
+                Id = 4, 
+                Name = "Weighted Squats Challenge", 
+                ImagePath = "/Images/challenge_weighted_squat.png", 
+                Category = "LOWER BODY", 
+                Difficulty = "EASY", 
+                MainMuscle = "LEGS", 
+                SecondaryMuscles = "GLUTES, CORE, HAMSTRING",
+                Tasks = new List<TaskItem> { CreateTask("3 Sets of 15 Bodyweight Squats", "Maintain proper depth and chest up.", "Warmup") }
+            },
+            new Challenge 
+            { 
+                Id = 7, 
+                Name = "30-Minute Run Challenge", 
+                ImagePath = "/Images/challenge_running.png", 
+                Category = "CARDIO", 
+                Difficulty = "MEDIUM", 
+                MainMuscle = "LEGS", 
+                SecondaryMuscles = "LUNGS, CALVES",
+                Tasks = new List<TaskItem> { CreateTask("Jog for 30 minutes straight", "Keep a steady, maintainable pace.", "Cardio") }
+            },
+        }; // <-- This is the crucial closing brace and semicolon for the list initialization.
 
-        // Get a single challenge by ID
-        public async Task<Challenge?> GetChallengeByIdAsync(int id)
+        public Task<List<Challenge>> GetAllChallengesAsync() => Task.FromResult(_challenges);
+        
+        public async Task AddChallengeToTasksAsync(int challengeId, string userName)
         {
-            return await _context.Challenges
-                .Include(c => c.Tasks)
-                .FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        // Complete a challenge: mark tasks done + award XP to pet
-        public async Task<bool> CompleteChallengeAsync(int challengeId, int petId)
-        {
-            var challenge = await _context.Challenges
-                .Include(c => c.Tasks)
-                .FirstOrDefaultAsync(c => c.Id == challengeId);
-
-            if (challenge == null) return false;
-
-            foreach (var task in challenge.Tasks)
+            var challenge = _challenges.FirstOrDefault(c => c.Id == challengeId);
+            
+            if (challenge != null && challenge.Tasks != null && challenge.Tasks.Any())
             {
-                if (!task.IsCompleted)
+                foreach (var task in challenge.Tasks)
                 {
-                    task.IsCompleted = true;
-
-                    // Award XP for each task to pet
-                    await _petService.AddXPAsync(petId, task.XP);
+                    var userTask = new TaskItem
+                    {
+                        UserName = userName,
+                        Name = $"[CHALLENGE] {task.Name}", 
+                        Description = $"{challenge.Name}: {task.Description}",
+                        Category = task.Category,
+                        IsCompleted = false
+                    };
+                    await _taskService.AddTaskAsync(userTask);
                 }
             }
-
-            challenge.Completed = true; // optional flag for Challenge itself
-            await _context.SaveChangesAsync();
-            return true;
         }
 
-        // Add a pre-made or custom challenge
-        public async Task<Challenge> AddChallengeAsync(string name, List<int> taskIds, bool isPreMade = false)
+        public Task<List<Challenge>> GetChallengesByCategoryAsync(string category)
         {
-            var tasks = await _context.Tasks
-                .Where(t => taskIds.Contains(t.Id))
-                .ToListAsync();
-
-            var challenge = new Challenge
-            {
-                Name = name,
-                IsPreMade = isPreMade,
-                Tasks = tasks
-            };
-
-            _context.Challenges.Add(challenge);
-            await _context.SaveChangesAsync();
-            return challenge;
+            if (category == "ALL")
+                return GetAllChallengesAsync();
+            
+            var filtered = _challenges.Where(c => c.Category == category).ToList();
+            return Task.FromResult(filtered);
         }
-
-        public async Task<bool> CompleteChallengeForUserAsync(int userId, int challengeId, int petId)
-        {
-            var userChallenge = await _context.UserChallenges
-                .FirstOrDefaultAsync(uc => uc.UserId == userId && uc.ChallengeId == challengeId);
-
-            if (userChallenge == null)
-            {
-                userChallenge = new UserChallenge
-                {
-                    UserId = userId,
-                    ChallengeId = challengeId
-                };
-                _context.UserChallenges.Add(userChallenge);
-            }
-
-            if (userChallenge.Completed) return false;
-
-            var challenge = await _context.Challenges
-                .Include(c => c.Tasks)
-                .FirstOrDefaultAsync(c => c.Id == challengeId);
-
-            if (challenge == null) return false;
-
-            foreach (var task in challenge.Tasks)
-            {
-                if (!task.IsCompleted)
-                {
-                    task.IsCompleted = true;
-                    await _petService.AddXPAsync(petId, task.XP);
-                }
-            }
-
-            userChallenge.Completed = true;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-    }
-}
+    } // <-- Closes the ChallengeService class
+} // <-- Closes the PawGress.Services namespace
